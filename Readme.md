@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Egor Platonov](https://up.htmlacademy.ru/react/10/user/1487723).
-* Наставник: `Алексей Хабиров`.
+* Наставник: [Алексей Хабиров](https://htmlacademy.ru/profile/alex_khab).
 
 ---
 
