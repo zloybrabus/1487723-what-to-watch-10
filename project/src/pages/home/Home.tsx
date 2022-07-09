@@ -1,18 +1,17 @@
-import React from 'react';
-import CardFilm from '../../components/cardFilm/cardFilm';
-
-type Img = string;
-type Alt = string;
-type Title = string;
-type Genre = string;
-type Year = number;
+import React from "react";
+import CardFilm from "../../components/card-film/card-film";
 
 type HomeProps = {
-  img: Img;
-  alt: Alt;
-  title: Title;
-  genre: Genre;
-  year: Year;
+  img: string;
+  alt: string;
+  title: string;
+  genre: string;
+  year: number;
+  cards: {
+    id: number;
+    title: string;
+    img: string;
+  }[];
 };
 
 function Home(props: HomeProps): JSX.Element {
@@ -133,7 +132,9 @@ function Home(props: HomeProps): JSX.Element {
           </ul>
 
           <div className="catalog__films-list">
-            <CardFilm />
+            {props.cards.map((cards) => (
+              <CardFilm title={cards.title} img={cards.img} key={cards.title} />
+            ))}
           </div>
 
           <div className="catalog__more">
