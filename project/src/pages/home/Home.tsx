@@ -1,5 +1,6 @@
-import React from "react";
-import CardFilm from "../../components/card-film/card-film";
+import React from 'react';
+import CardFilm from '../../components/card-film/card-film';
+import { CardFilms } from '../../types/card-film';
 
 type HomeProps = {
   img: string;
@@ -7,14 +8,10 @@ type HomeProps = {
   title: string;
   genre: string;
   year: number;
-  cards: {
-    id: number;
-    title: string;
-    img: string;
-  }[];
+  cards: CardFilms;
 };
 
-function Home(props: HomeProps): JSX.Element {
+function Home({ img, alt, title, genre, year, cards }: HomeProps): JSX.Element {
   return (
     <React.Fragment>
       <section className="film-card">
@@ -58,14 +55,14 @@ function Home(props: HomeProps): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={props.img} alt={props.alt} width="218" height="327" />
+              <img src={img} alt={alt} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{props.title}</h2>
+              <h2 className="film-card__title">{title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{props.genre}</span>
-                <span className="film-card__year">{props.year}</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{year}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -132,8 +129,8 @@ function Home(props: HomeProps): JSX.Element {
           </ul>
 
           <div className="catalog__films-list">
-            {props.cards.map((cards) => (
-              <CardFilm title={cards.title} img={cards.img} key={cards.title} />
+            {cards.map((card) => (
+              <CardFilm card={card} key={card.title} />
             ))}
           </div>
 
