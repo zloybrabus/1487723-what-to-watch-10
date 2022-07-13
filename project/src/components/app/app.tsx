@@ -10,7 +10,6 @@ import SignIn from '../../pages/sign-in/sign-in';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../../components/private-route/private-route';
 
-
 const cards: CardFilms = [
   {
     id: 0,
@@ -116,55 +115,42 @@ const cards: CardFilms = [
 
 function App(): JSX.Element {
   return (
-   <BrowserRouter>
-    <Routes>
-      <Route path={AppRoute.Main}
-      element={
-        <Home
-          img="img/the-grand-budapest-hotel-poster.jpg"
-          alt="The Grand Budapest Hotel poster"
-          title="The Grand Budapest Hotel"
-          genre="Drama"
-          year={2014}
-          cards={cards}
-        />} 
-      />
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={
+            <Home
+              img="img/the-grand-budapest-hotel-poster.jpg"
+              alt="The Grand Budapest Hotel poster"
+              title="The Grand Budapest Hotel"
+              genre="Drama"
+              year={2014}
+              cards={cards}
+            />
+          }
+        />
 
-      <Route
-        path={AppRoute.SignIn}
-        element={<SignIn />}
-      />
+        <Route path={AppRoute.SignIn} element={<SignIn />} />
 
-      <Route 
-        path={AppRoute.MyList}
-        element={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-            <MyList />
-          </PrivateRoute>
-        }
-      />
+        <Route
+          path={AppRoute.MyList}
+          element={
+            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <MyList />
+            </PrivateRoute>
+          }
+        />
 
-      <Route
-        path={AppRoute.Film}
-        element={<Film />}
-      />
+        <Route path={AppRoute.Film} element={<Film />} />
 
-      <Route 
-        path={AppRoute.AddReview}
-        element={<AddReview />}
-      />
+        <Route path={AppRoute.AddReview} element={<AddReview />} />
 
-      <Route
-        path={AppRoute.Player}
-        element={<Player />}
-      />
+        <Route path={AppRoute.Player} element={<Player />} />
 
-      <Route
-        path="*"
-        element={<NotFoundScreen />}
-      />
-    </Routes>
-   </BrowserRouter>
+        <Route path='*' element={<NotFoundScreen />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

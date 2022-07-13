@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 function Player(): JSX.Element {
   return (
@@ -7,7 +7,8 @@ function Player(): JSX.Element {
         src="#"
         className="player__video"
         poster="img/player-poster.jpg"
-      ></video>
+      >
+      </video>
 
       <button type="button" className="player__exit">
         Exit
@@ -20,8 +21,9 @@ function Player(): JSX.Element {
               className="player__progress"
               value="30"
               max="100"
-            ></progress>
-            <div className="player__toggler" style={{ left: "30%" }}>
+            >
+            </progress>
+            <div className="player__toggler" style={{ left: '30%' }}>
               Toggler
             </div>
           </div>

@@ -1,7 +1,7 @@
-import React from "react";
-import CardFilm from "../../components/card-film/card-film";
-import { CardFilms } from "../../types/card-film";
-import Logo from "../../components/logo/logo";
+import React from 'react';
+import CardFilm from '../../components/card-film/card-film';
+import { CardFilms } from '../../types/card-film';
+import Logo from '../../components/logo/logo';
 
 type HomeProps = {
   img: string;

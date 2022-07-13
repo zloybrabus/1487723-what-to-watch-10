@@ -1,5 +1,5 @@
-import React from "react";
-import Logo from "../../components/logo/logo";
+import React from 'react';
+import Logo from '../../components/logo/logo';
 
 function SignIn(): JSX.Element {
   return (
