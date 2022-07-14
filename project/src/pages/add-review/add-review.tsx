@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../components/logo/logo';
+import LogoHeader from '../../components/logo-header/logo-header';
 
 function AddReview(): JSX.Element {
   return (
@@ -15,7 +15,7 @@ function AddReview(): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header">
-          <Logo />
+          <LogoHeader />
 
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">

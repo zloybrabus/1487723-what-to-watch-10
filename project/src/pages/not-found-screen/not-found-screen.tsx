@@ -1,14 +1,15 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import styles from './not-found-screen.module.css';
 
 function NotFoundScreen(): JSX.Element {
   return (
-    <Fragment>
-      <h1>404</h1>
+    <div className={styles.err__wrapper}>
+      <h1 className={styles.err__title}>404</h1>
       <br />
-      <p>PAGE NOT FOUND</p>
-      <Link to="/">Вернуться на главную</Link>
-    </Fragment>
+      <p className={styles.err__text}>PAGE NOT FOUND</p>
+      <Link to="/" className={styles.err__link}>Вернуться на главную</Link>
+    </div>
   );
 }
 

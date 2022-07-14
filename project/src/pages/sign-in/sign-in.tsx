@@ -1,11 +1,12 @@
 import React from 'react';
-import Logo from '../../components/logo/logo';
+import LogoFooter from '../../components/logo-footer/logo-footer';
+import LogoHeader from '../../components/logo-header/logo-header';
 
 function SignIn(): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo />
+        <LogoHeader />
 
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
@@ -53,7 +54,7 @@ function SignIn(): JSX.Element {
       </div>
 
       <footer className="page-footer">
-        <Logo />
+        <LogoFooter />
 
         <div className="copyright">
           <p>© 2019 What to watch Ltd.</p>
