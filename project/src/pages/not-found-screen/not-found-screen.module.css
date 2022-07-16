@@ -1,0 +1,27 @@
+.err__wrapper {
+    height: 100vh;
+    color: #eee5b5;
+    background: #e1b0b2;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.err__title {
+    margin: 0;
+    font-size: 95px;
+    font-weight: 700;
+}
+
+.err__text {
+    font-size: 25px;
+    font-weight: 400;
+    padding-top: 20px;
+    color: #180202;
+}
+
+.err__link {
+    color: #180202;
+    text-decoration: none;
+}
