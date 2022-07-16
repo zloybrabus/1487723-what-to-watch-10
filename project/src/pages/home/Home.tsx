@@ -1,8 +1,8 @@
 import React from 'react';
 import CardFilm from '../../components/card-film/card-film';
 import { CardFilms } from '../../types/card-film';
-import LogoHeader from '../../components/logo-header/logo-header';
-import LogoFooter from '../../components/logo-footer/logo-footer';
+import Logo from '../../components/logo/logo';
+import Footer from '../../components/footer/footer';
 
 type HomeProps = {
   img: string;
@@ -27,7 +27,7 @@ function Home({ img, alt, title, genre, year, cards }: HomeProps): JSX.Element {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header film-card__head">
-          <LogoHeader />
+          <Logo />
 
           <ul className="user-block">
             <li className="user-block__item">
@@ -137,13 +137,7 @@ function Home({ img, alt, title, genre, year, cards }: HomeProps): JSX.Element {
           </div>
         </section>
 
-        <footer className="page-footer">
-          <LogoFooter />
-
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </React.Fragment>
   );

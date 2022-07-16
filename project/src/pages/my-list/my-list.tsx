@@ -1,12 +1,12 @@
 import React from 'react';
-import LogoFooter from '../../components/logo-footer/logo-footer';
-import LogoHeader from '../../components/logo-header/logo-header';
+import Footer from '../../components/footer/footer';
+import Logo from '../../components/logo/logo';
 
 function MyList(): JSX.Element {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <LogoHeader />
+        <Logo />
 
         <h1 className="page-title user-page__title">
           My list <span className="user-page__film-count">9</span>
@@ -178,13 +178,7 @@ function MyList(): JSX.Element {
         </div>
       </section>
 
-      <footer className="page-footer">
-        <LogoFooter />
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
