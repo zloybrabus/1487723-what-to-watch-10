@@ -1,5 +1,5 @@
 import React from 'react';
-import CardFilm from '../../components/card-film/card-film';
+import FilmList from '../../components/film-list/film-list';
 import { CardFilms } from '../../types/card-film';
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
@@ -123,12 +123,7 @@ function Home({ img, alt, title, genre, year, cards }: HomeProps): JSX.Element {
               <a className="catalog__genres-link">Thrillers</a>
             </li>
           </ul>
-
-          <div className="catalog__films-list">
-            {cards.map((card) => (
-              <CardFilm card={card} key={card.title} />
-            ))}
-          </div>
+          <FilmList cards={cards} />
 
           <div className="catalog__more">
             <button className="catalog__button" type="button">
