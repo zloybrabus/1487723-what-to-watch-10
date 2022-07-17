@@ -67,7 +67,6 @@ function AddReview({cards}: AddReviewProps): JSX.Element {
       </div>
 
       <FormReview />
-      
     </section>
   );
 }
