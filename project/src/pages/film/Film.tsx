@@ -2,7 +2,7 @@ import React from 'react';
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
 import { CardFilms } from '../../types/card-film';
-import {useParams} from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 type CardFilmProps= {
   cards: CardFilms;
@@ -10,15 +10,16 @@ type CardFilmProps= {
 
 function Film({ cards }: CardFilmProps): JSX.Element {
   const params = useParams();
-  const card = cards.find((cardInFilm) => String(cardInFilm.id).includes(params.id ? params.id.slice(1) : '0'));
+  const id = `${(params.id ? params.id.slice(1) : '0')}`;
+  const card = cards.find((cardInFilm) => cardInFilm.id === Number.parseInt(id, 10)) || cards[0];
   return (
     <React.Fragment>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img
-              src={card?.img}
-              alt={card?.title}
+              src={card.img}
+              alt={card.title}
             />
           </div>
 
@@ -48,10 +49,10 @@ function Film({ cards }: CardFilmProps): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{card?.title}</h2>
+              <h2 className="film-card__title">{card.title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">{card?.released}</span>
+                <span className="film-card__genre">{card.genre}</span>
+                <span className="film-card__year">{card.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -74,9 +75,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">{cards.length}</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">
-                  Add review
-                </a>
+                <Link to={`/films/:${card.id}/review`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -86,8 +85,8 @@ function Film({ cards }: CardFilmProps): JSX.Element {
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
               <img
-                src={card?.img}
-                alt={card?.title}
+                src={card.img}
+                alt={card.title}
                 width="218"
                 height="327"
               />
@@ -115,26 +114,25 @@ function Film({ cards }: CardFilmProps): JSX.Element {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
+                <div className="film-rating__score">{card.rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
+                  <span className="film-rating__count">{card.scoresCount} ratings</span>
                 </p>
               </div>
 
               <div className="film-card__text">
                 <p>
-                  {card?.description}
+                  {card.description}
                 </p>
 
                 <p className="film-card__director">
-                  <strong>Director: Wes Anderson</strong>
+                  <strong>Director: {card.director}</strong>
                 </p>
 
                 <p className="film-card__starring">
                   <strong>
-                    Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe
-                    and other
+                    Starring: {card.starring}
                   </strong>
                 </p>
               </div>
