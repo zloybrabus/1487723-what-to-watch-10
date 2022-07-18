@@ -2,16 +2,19 @@ import React from 'react';
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
 import { CardFilms } from '../../types/card-film';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate, generatePath } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 type CardFilmProps= {
   cards: CardFilms;
 }
 
 function Film({ cards }: CardFilmProps): JSX.Element {
-  const params = useParams();
-  const id = `${(params.id ? params.id.slice(1) : '0')}`;
-  const card = cards.find((cardInFilm) => cardInFilm.id === Number.parseInt(id, 10)) || cards[0];
+  const { id } = useParams();
+  const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
+  if (!card) {
+    return <Navigate to="/" />
+  }
   return (
     <React.Fragment>
       <section className="film-card film-card--full">
@@ -75,7 +78,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">{cards.length}</span>
                 </button>
-                <Link to={`/films/:${card.id}/review`} className="btn film-card__button">Add review</Link>
+                <Link to={generatePath(AppRoute.AddReview, { id: card.id + '' })} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -149,7 +152,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
             <article className="small-film-card catalog__films-card">
               <div className="small-film-card__image">
                 <img
-                  src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+                  src="/img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
                   alt="Fantastic Beasts: The Crimes of Grindelwald"
                   width="280"
                   height="175"
@@ -165,7 +168,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
             <article className="small-film-card catalog__films-card">
               <div className="small-film-card__image">
                 <img
-                  src="img/bohemian-rhapsody.jpg"
+                  src="/img/bohemian-rhapsody.jpg"
                   alt="Bohemian Rhapsody"
                   width="280"
                   height="175"
@@ -181,7 +184,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
             <article className="small-film-card catalog__films-card">
               <div className="small-film-card__image">
                 <img
-                  src="img/macbeth.jpg"
+                  src="/img/macbeth.jpg"
                   alt="Macbeth"
                   width="280"
                   height="175"
@@ -197,7 +200,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
             <article className="small-film-card catalog__films-card">
               <div className="small-film-card__image">
                 <img
-                  src="img/aviator.jpg"
+                  src="/img/aviator.jpg"
                   alt="Aviator"
                   width="280"
                   height="175"

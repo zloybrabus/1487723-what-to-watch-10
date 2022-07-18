@@ -1,12 +1,23 @@
 import React from 'react';
+import { Navigate, useParams } from 'react-router-dom';
+import { CardFilms } from '../../types/card-film';
 
-function Player(): JSX.Element {
+type CardFilmProps= {
+  cards: CardFilms;
+}
+
+function Player({ cards }: CardFilmProps): JSX.Element {
+    const { id } = useParams();
+    const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
+    if (!card) {
+      return <Navigate to="/" />
+    }
   return (
     <div className="player">
       <video
         src="#"
         className="player__video"
-        poster="img/player-poster.jpg"
+        poster={card.img}
       >
       </video>
 

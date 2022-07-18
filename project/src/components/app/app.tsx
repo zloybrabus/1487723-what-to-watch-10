@@ -47,7 +47,7 @@ function App({ cards }: AppProps): JSX.Element {
 
         <Route path={AppRoute.AddReview} element={<AddReview cards={cards}/>} />
 
-        <Route path={AppRoute.Player} element={<Player />} />
+        <Route path={AppRoute.Player} element={<Player cards={cards} />} />
 
         <Route path='*' element={<NotFoundScreen />} />
       </Routes>

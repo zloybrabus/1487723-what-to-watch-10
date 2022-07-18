@@ -1,17 +1,20 @@
 import React from 'react';
 import Logo from '../../components/logo/logo';
 import { CardFilms } from '../../types/card-film';
-import {useParams, Link} from 'react-router-dom';
+import {useParams, Link, Navigate, generatePath} from 'react-router-dom';
 import FormReview from '../../components/form-review/form-review';
+import { AppRoute } from '../../const';
 
 type AddReviewProps = {
   cards: CardFilms;
 }
 
 function AddReview({cards}: AddReviewProps): JSX.Element {
-  const params = useParams();
-  const id = `${(params.id ? params.id.slice(1) : '0')}`;
-  const card = cards.find((item) => item.id === Number.parseInt(id, 10)) || cards[0];
+  const { id } = useParams();
+  const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
+  if (!card) {
+    return <Navigate to="/" />
+  }
 
   return (
     <section className="film-card film-card--full">
@@ -31,10 +34,10 @@ function AddReview({cards}: AddReviewProps): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={`/films/:${card.id}`} className="breadcrumbs__link">{card.title}</Link>
+                <Link to={generatePath(AppRoute.Film, { id: card.id + '' })} className="breadcrumbs__link">{card.title}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={`/films/:${card.id}/review`}>Add review</Link>
+                <Link className="breadcrumbs__link" to={generatePath(AppRoute.AddReview, { id: card.id + '' })}>Add review</Link>
               </li>
             </ul>
           </nav>

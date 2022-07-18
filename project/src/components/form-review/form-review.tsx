@@ -22,7 +22,7 @@ function FormReview(): JSX.Element {
                     name="rating"
                     value={score}
                     checked={score === rating}
-                    onChange = {(evt) => setRating(Number(evt.target.value))}
+                    onChange={(evt) => setRating(Number(evt.target.value))}
                   />
                   <label className="rating__label" htmlFor={`star-${score}`}>Rating {score}</label>
                 </React.Fragment>
@@ -32,7 +32,13 @@ function FormReview(): JSX.Element {
         </div>
 
         <div className="add-review__text">
-          <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={review} onChange={(evt) => setReview(evt.target.value)}></textarea>
+          <textarea
+            className="add-review__textarea"
+            name="review-text" id="review-text"
+            placeholder="Review text"
+            value={review}
+            onChange={(evt) => setReview(evt.target.value)}>
+          </textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Добавить отзыв</button>
           </div>

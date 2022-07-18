@@ -1,18 +1,30 @@
 import { CardFilm as CardFilmType } from '../../types/card-film';
-import { Link } from 'react-router-dom';
+import { Link, generatePath } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 type CardFilmProps= {
   card: CardFilmType
+  filmCardTarget: number | undefined,
+  setTarget: React.Dispatch<React.SetStateAction<number | undefined>>
 }
 
-function CardFilm({ card }: CardFilmProps) {
+function CardFilm({ card, setTarget }: CardFilmProps) {
+
+  const handleMouseEnter = () => {
+    setTarget(card.id);
+  };
+
+  const handleMouseLeave = () => {
+    setTarget(undefined);
+  };
+
   return (
-    <article className="small-film-card catalog__films-card">
+    <article className="small-film-card catalog__films-card" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div className="small-film-card__image">
         <img src={card.img} alt={card.title} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={`/films/:${card.id}`}>{card.title}</Link>
+        <Link className="small-film-card__link" to={generatePath(AppRoute.Film, { id: card.id + '' })}>{card.title}</Link>
       </h3>
     </article>
   );
