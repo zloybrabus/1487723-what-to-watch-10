@@ -13,7 +13,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
   const { id } = useParams();
   const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
   if (!card) {
-    return <Navigate to="/" />
+    return <Navigate to="/" />;
   }
   return (
     <React.Fragment>
@@ -78,7 +78,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">{cards.length}</span>
                 </button>
-                <Link to={generatePath(AppRoute.AddReview, { id: card.id + '' })} className="btn film-card__button">Add review</Link>
+                <Link to={generatePath(AppRoute.AddReview, { id: `${card.id}` })} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>

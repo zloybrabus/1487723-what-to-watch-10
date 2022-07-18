@@ -13,7 +13,7 @@ function AddReview({cards}: AddReviewProps): JSX.Element {
   const { id } = useParams();
   const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
   if (!card) {
-    return <Navigate to="/" />
+    return <Navigate to="/" />;
   }
 
   return (
@@ -34,10 +34,10 @@ function AddReview({cards}: AddReviewProps): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={generatePath(AppRoute.Film, { id: card.id + '' })} className="breadcrumbs__link">{card.title}</Link>
+                <Link to={generatePath(AppRoute.Film, { id: `${card.id}`} )} className="breadcrumbs__link">{card.title}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={generatePath(AppRoute.AddReview, { id: card.id + '' })}>Add review</Link>
+                <Link className="breadcrumbs__link" to={generatePath(AppRoute.AddReview, { id: `${card.id}` })}>Add review</Link>
               </li>
             </ul>
           </nav>

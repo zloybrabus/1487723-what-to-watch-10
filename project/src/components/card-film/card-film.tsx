@@ -3,13 +3,12 @@ import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
 type CardFilmProps= {
-  card: CardFilmType
+  card: CardFilmType,
   filmCardTarget: number | undefined,
   setTarget: React.Dispatch<React.SetStateAction<number | undefined>>
 }
 
-function CardFilm({ card, setTarget }: CardFilmProps) {
-
+function CardFilm({ card, setTarget, filmCardTarget }: CardFilmProps) {
   const handleMouseEnter = () => {
     setTarget(card.id);
   };
@@ -24,7 +23,7 @@ function CardFilm({ card, setTarget }: CardFilmProps) {
         <img src={card.img} alt={card.title} width="280" height="175" />
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={generatePath(AppRoute.Film, { id: card.id + '' })}>{card.title}</Link>
+        <Link className="small-film-card__link" to={generatePath(AppRoute.Film, { id: `${card.id}` })}>{card.title}</Link>
       </h3>
     </article>
   );

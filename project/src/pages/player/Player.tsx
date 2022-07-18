@@ -7,11 +7,11 @@ type CardFilmProps= {
 }
 
 function Player({ cards }: CardFilmProps): JSX.Element {
-    const { id } = useParams();
-    const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
-    if (!card) {
-      return <Navigate to="/" />
-    }
+  const { id } = useParams();
+  const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
+  if (!card) {
+    return <Navigate to="/" />;
+  }
   return (
     <div className="player">
       <video
