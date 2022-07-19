@@ -1,4 +1,4 @@
-.err__wrapper {
+.wrapper {
     height: 100vh;
     color: #eee5b5;
     background: #e1b0b2;
@@ -8,20 +8,20 @@
     align-items: center;
 }
 
-.err__title {
+.title {
     margin: 0;
     font-size: 95px;
     font-weight: 700;
 }
 
-.err__text {
+.text {
     font-size: 25px;
     font-weight: 400;
     padding-top: 20px;
     color: #180202;
 }
 
-.err__link {
+.link {
     color: #180202;
     text-decoration: none;
 }

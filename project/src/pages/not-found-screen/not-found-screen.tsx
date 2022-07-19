@@ -4,11 +4,11 @@ import styles from './not-found-screen.module.css';
 
 function NotFoundScreen(): JSX.Element {
   return (
-    <div className={styles.err__wrapper}>
-      <h1 className={styles.err__title}>404</h1>
+    <div className={styles.wrapper}>
+      <h1 className={styles.title}>404</h1>
       <br />
-      <p className={styles.err__text}>PAGE NOT FOUND</p>
-      <Link to="/" className={styles.err__link}>Вернуться на главную</Link>
+      <p className={styles.text}>PAGE NOT FOUND</p>
+      <Link to="/" className={styles.link}>Вернуться на главную</Link>
     </div>
   );
 }

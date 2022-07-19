@@ -1,16 +1,28 @@
 import React from 'react';
 import Logo from '../../components/logo/logo';
 import Footer from '../../components/footer/footer';
+import { CardFilms } from '../../types/card-film';
+import { useParams, Link, Navigate, generatePath } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
-function Film(): JSX.Element {
+type CardFilmProps= {
+  cards: CardFilms;
+}
+
+function Film({ cards }: CardFilmProps): JSX.Element {
+  const { id } = useParams();
+  const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
+  if (!card) {
+    return <Navigate to="/" />;
+  }
   return (
     <React.Fragment>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img
-              src="img/bg-the-grand-budapest-hotel.jpg"
-              alt="The Grand Budapest Hotel"
+              src={card.img}
+              alt={card.title}
             />
           </div>
 
@@ -23,7 +35,7 @@ function Film(): JSX.Element {
               <li className="user-block__item">
                 <div className="user-block__avatar">
                   <img
-                    src="img/avatar.jpg"
+                    src="/img/avatar.jpg"
                     alt="User avatar"
                     width="63"
                     height="63"
@@ -40,10 +52,10 @@ function Film(): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">The Grand Budapest Hotel</h2>
+              <h2 className="film-card__title">{card.title}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">Drama</span>
-                <span className="film-card__year">2014</span>
+                <span className="film-card__genre">{card.genre}</span>
+                <span className="film-card__year">{card.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -64,11 +76,9 @@ function Film(): JSX.Element {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">9</span>
+                  <span className="film-card__count">{cards.length}</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">
-                  Add review
-                </a>
+                <Link to={generatePath(AppRoute.AddReview, { id: `${card.id}` })} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -78,8 +88,8 @@ function Film(): JSX.Element {
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
               <img
-                src="img/the-grand-budapest-hotel-poster.jpg"
-                alt="The Grand Budapest Hotel poster"
+                src={card.img}
+                alt={card.title}
                 width="218"
                 height="327"
               />
@@ -107,38 +117,25 @@ function Film(): JSX.Element {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">8,9</div>
+                <div className="film-rating__score">{card.rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">240 ratings</span>
+                  <span className="film-rating__count">{card.scoresCount} ratings</span>
                 </p>
               </div>
 
               <div className="film-card__text">
                 <p>
-                  In the 1930s, the Grand Budapest Hotel is a popular European
-                  ski resort, presided over by concierge Gustave H. (Ralph
-                  Fiennes). Zero, a junior lobby boy, becomes Gustave&apos;s
-                  friend and protege.
-                </p>
-
-                <p>
-                  Gustave prides himself on providing first-className service to
-                  the hotel&apos;s guests, including satisfying the sexual needs
-                  of the many elderly women who stay there. When one of
-                  Gustave&apos;s lovers dies mysteriously, Gustave finds himself
-                  the recipient of a priceless painting and the chief suspect in
-                  her murder.
+                  {card.description}
                 </p>
 
                 <p className="film-card__director">
-                  <strong>Director: Wes Anderson</strong>
+                  <strong>Director: {card.director}</strong>
                 </p>
 
                 <p className="film-card__starring">
                   <strong>
-                    Starring: Bill Murray, Edward Norton, Jude Law, Willem Dafoe
-                    and other
+                    Starring: {card.starring}
                   </strong>
                 </p>
               </div>
@@ -155,7 +152,7 @@ function Film(): JSX.Element {
             <article className="small-film-card catalog__films-card">
               <div className="small-film-card__image">
                 <img
-                  src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+                  src="/img/fantastic-beasts-the-crimes-of-grindelwald.jpg"
                   alt="Fantastic Beasts: The Crimes of Grindelwald"
                   width="280"
                   height="175"
@@ -171,7 +168,7 @@ function Film(): JSX.Element {
             <article className="small-film-card catalog__films-card">
               <div className="small-film-card__image">
                 <img
-                  src="img/bohemian-rhapsody.jpg"
+                  src="/img/bohemian-rhapsody.jpg"
                   alt="Bohemian Rhapsody"
                   width="280"
                   height="175"
@@ -187,7 +184,7 @@ function Film(): JSX.Element {
             <article className="small-film-card catalog__films-card">
               <div className="small-film-card__image">
                 <img
-                  src="img/macbeth.jpg"
+                  src="/img/macbeth.jpg"
                   alt="Macbeth"
                   width="280"
                   height="175"
@@ -203,7 +200,7 @@ function Film(): JSX.Element {
             <article className="small-film-card catalog__films-card">
               <div className="small-film-card__image">
                 <img
-                  src="img/aviator.jpg"
+                  src="/img/aviator.jpg"
                   alt="Aviator"
                   width="280"
                   height="175"
