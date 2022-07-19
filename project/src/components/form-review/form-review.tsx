@@ -1,15 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, ChangeEvent, FormEvent} from 'react';
 
 const ratingValues: number[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
 function FormReview(): JSX.Element {
 
-  const [rating, setRating] = useState(0);
-  const [review, setReview] = useState('');
+  const [inputData, setFormInput] = useState({
+    rating: '',
+    reviewText: '',
+  });
+
+  const inputChangeHandler = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+
+    const {value, name} = evt.target;
+    setFormInput({
+      ...inputData,
+      [name]: value,
+    });
+  };
+
+  const postForm = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+  };
 
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form">
+      <form onSubmit={postForm} action="#" className="add-review__form">
         <div className="rating">
           <div className="rating__stars">
             {
@@ -21,8 +36,7 @@ function FormReview(): JSX.Element {
                     type="radio"
                     name="rating"
                     value={score}
-                    checked={score === rating}
-                    onChange={(evt) => setRating(Number(evt.target.value))}
+                    onChange={inputChangeHandler}
                   />
                   <label className="rating__label" htmlFor={`star-${score}`}>Rating {score}</label>
                 </React.Fragment>
@@ -34,10 +48,10 @@ function FormReview(): JSX.Element {
         <div className="add-review__text">
           <textarea
             className="add-review__textarea"
-            name="review-text" id="review-text"
+            name="reviewText" id="reviewText"
             placeholder="Review text"
-            value={review}
-            onChange={(evt) => setReview(evt.target.value)}
+            onChange={inputChangeHandler}
+            value={inputData.reviewText}
           >
           </textarea>
           <div className="add-review__submit">
