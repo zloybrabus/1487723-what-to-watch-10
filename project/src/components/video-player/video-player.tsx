@@ -1,22 +1,23 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
-type VideoPlayerType = {
+type VideoPlayerProps = {
   video: string;
   img: string;
 }
 
-function VideoPlayer ({video, img}: VideoPlayerType) {
+function VideoPlayer ({video, img}: VideoPlayerProps) {
   const playRef = useRef<HTMLVideoElement>(null);
 
-  const playVideoTimeout = () => {
-    playRef.current && playRef.current.play();
-  };
-  setTimeout(playVideoTimeout, 1000);
+  useEffect(() => {
+    const playVideoTimeout = setTimeout(() =>
+      playRef.current && playRef.current.play(),
+    1000);
+
+    return () => clearTimeout(playVideoTimeout);
+  });
 
   return(
-    <video ref={playRef} src={video} muted loop width='280' height='175' poster={img}>
-
-    </video>
+    <video ref={playRef} src={video} muted loop width='280' height='175' poster={img} />
   );
 }
 export default VideoPlayer;
