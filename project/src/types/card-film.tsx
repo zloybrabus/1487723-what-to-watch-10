@@ -6,6 +6,7 @@ export type CardFilm = {
     director: string,
     starring: string,
     rating: number,
+    duration: number,
     scoresCount: number,
     released: number,
     isFavorite: boolean,

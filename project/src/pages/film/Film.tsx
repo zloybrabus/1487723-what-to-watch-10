@@ -4,6 +4,7 @@ import Footer from '../../components/footer/footer';
 import { CardFilms } from '../../types/card-film';
 import { useParams, Link, Navigate, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import CardTabs from '../../components/card-tabs/card-tabs';
 
 type CardFilmProps= {
   cards: CardFilms;
@@ -95,51 +96,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
               />
             </div>
 
-            <div className="film-card__desc">
-              <nav className="film-nav film-card__nav">
-                <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="/#" className="film-nav__link">
-                      Overview
-                    </a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/#" className="film-nav__link">
-                      Details
-                    </a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="/#" className="film-nav__link">
-                      Reviews
-                    </a>
-                  </li>
-                </ul>
-              </nav>
-
-              <div className="film-rating">
-                <div className="film-rating__score">{card.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">Very good</span>
-                  <span className="film-rating__count">{card.scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>
-                  {card.description}
-                </p>
-
-                <p className="film-card__director">
-                  <strong>Director: {card.director}</strong>
-                </p>
-
-                <p className="film-card__starring">
-                  <strong>
-                    Starring: {card.starring}
-                  </strong>
-                </p>
-              </div>
-            </div>
+            <CardTabs card={card} />
           </div>
         </div>
       </section>
