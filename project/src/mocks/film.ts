@@ -10,7 +10,7 @@ export const cards: CardFilms = [
     duration: 133,
     rating: 8.9,
     director: 'David Yates',
-    starring: 'Jhony Deep and other...',
+    starring: ['Jhony Deep', 'and other...'],
     scoresCount: 240,
     isFavorite: false,
     videoLink:
@@ -27,7 +27,7 @@ export const cards: CardFilms = [
     duration: 133,
     rating: 8.9,
     director: 'Bryan Singer',
-    starring: 'Rami Malek and other...',
+    starring: ['Rami Malek', 'and other...'],
     scoresCount: 220,
     isFavorite: false,
     videoLink:
@@ -44,7 +44,7 @@ export const cards: CardFilms = [
     duration: 133,
     rating: 8.9,
     director: 'Justin Kurzel',
-    starring: 'Michael Fassbender and other...',
+    starring: ['Michael Fassbender', 'and other...'],
     scoresCount: 220,
     isFavorite: false,
     videoLink:
@@ -61,7 +61,7 @@ export const cards: CardFilms = [
     duration: 133,
     rating: 8.9,
     director: 'Martin Scorsese',
-    starring: 'Leonardo DiCaprio and other...',
+    starring: ['Leonardo DiCaprio', 'and other...'],
     scoresCount: 420,
     isFavorite: false,
     videoLink:
@@ -78,7 +78,7 @@ export const cards: CardFilms = [
     duration: 133,
     rating: 8.9,
     director: 'Lynne Ramsay',
-    starring: 'Tilda Swinton and other...',
+    starring: ['Tilda Swinton', 'and other...'],
     scoresCount: 420,
     isFavorite: false,
     videoLink:
@@ -95,7 +95,7 @@ export const cards: CardFilms = [
     duration: 133,
     rating: 8.9,
     director: 'Jemaine Clement',
-    starring: 'Natasia Demetriou and other...',
+    starring: ['Natasia Demetriou', 'and other...'],
     scoresCount: 120,
     isFavorite: false,
     videoLink:
@@ -112,7 +112,7 @@ export const cards: CardFilms = [
     duration: 133,
     rating: 8.9,
     director: 'Alejandro G. Iñárritu',
-    starring: 'Leonardo DiCaprio and other...',
+    starring: ['Leonardo DiCaprio', 'and other...'],
     scoresCount: 232,
     isFavorite: false,
     videoLink:
@@ -129,7 +129,7 @@ export const cards: CardFilms = [
     duration: 133,
     rating: 8.9,
     director: 'Peter Howit',
-    starring: 'Rowan Atkinson and other...',
+    starring: ['Rowan Atkinson', 'and other...'],
     scoresCount: 232,
     isFavorite: false,
     videoLink:
@@ -146,7 +146,7 @@ export const cards: CardFilms = [
     duration: 133,
     rating: 8.9,
     director: 'Martin Scorsese',
-    starring: 'Leonardo DiCaprio and other...',
+    starring: ['Leonardo DiCaprio', 'and other...'],
     scoresCount: 412,
     isFavorite: false,
     videoLink:

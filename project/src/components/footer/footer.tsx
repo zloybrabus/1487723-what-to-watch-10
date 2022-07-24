@@ -10,7 +10,7 @@ function Footer() {
       </div>
 
       <div className="copyright">
-        <p>© 2019 What to watch Lt.</p>
+        <p>© 2019 What to watch Ltd.</p>
       </div>
     </footer>
   );
