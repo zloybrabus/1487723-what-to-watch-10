@@ -4,8 +4,9 @@ export type CardFilm = {
     img: string;
     genre: string,
     director: string,
-    starring: string,
+    starring: string[],
     rating: number,
+    duration: number,
     scoresCount: number,
     released: number,
     isFavorite: boolean,
