@@ -4,7 +4,7 @@ import { chengeGenreAction, getFilmsWithGenreAction, resetFilterGenreAction, get
 
 const COUNT_RENDER_FILMS = 8;
 const startRenderFilms = cards.slice(0, COUNT_RENDER_FILMS);
-const initialState = {
+export const initialState = {
   genre: 'All genres',
   films: cards,
   filmsFilteredGenre: cards,

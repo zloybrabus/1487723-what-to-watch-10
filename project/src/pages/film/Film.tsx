@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../components/logo/logo';
+import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { CardFilms } from '../../types/card-film';
 import { useParams, Link, Navigate, generatePath } from 'react-router-dom';
@@ -29,28 +29,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
-
-          <header className="page-header film-card__head">
-            <Logo />
-
-            <ul className="user-block">
-              <li className="user-block__item">
-                <div className="user-block__avatar">
-                  <img
-                    src="/img/avatar.jpg"
-                    alt="User avatar"
-                    width="63"
-                    height="63"
-                  />
-                </div>
-              </li>
-              <li className="user-block__item">
-                <a href="/#" className="user-block__link">
-                  Sign out
-                </a>
-              </li>
-            </ul>
-          </header>
+          <Header />
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
@@ -106,7 +85,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList cards={cards} />
+          <FilmList films={cards} />
         </section>
 
         <Footer />

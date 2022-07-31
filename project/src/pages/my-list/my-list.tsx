@@ -34,7 +34,7 @@ function MyList(): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmList cards={cards} />
+        <FilmList films={cards} />
       </section>
 
       <Footer />

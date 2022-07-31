@@ -1,8 +1,7 @@
 import { getMoreFilms } from '../../action';
-import { useAppDisptach, useAppSelector } from '../../hooks';
+import { useAppDisptach } from '../../hooks';
 
 function ShowMoreButton () {
-  const isRenderButton = useAppSelector((state) => state.isRenderShowMoreButton);
   const dispatch = useAppDisptach();
 
   const clickButtonHandler = () => {
@@ -10,7 +9,7 @@ function ShowMoreButton () {
   };
   return (
     <div className="catalog__more">
-      <button onClick={clickButtonHandler} className={isRenderButton ? 'catalog__button' : 'visually-hidden'} type="button">Show more</button>
+      <button onClick={clickButtonHandler} className='catalog__button' type="button">Show more</button>
     </div>
   );
 }
