@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { chengeGenreAction } from '../../action';
+import { changeGenreAction, resetCounter } from '../../action';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { genres } from '../../mocks/genres';
 import cn from 'classnames';
@@ -9,7 +9,8 @@ function GenersList() {
   const activeGenre = useAppSelector((state) => state.genre);
 
   const clickHandler = (genre: string) => {
-    dispatch(chengeGenreAction(genre));
+    dispatch(changeGenreAction(genre));
+    dispatch(resetCounter());
   };
 
   return (

@@ -1,11 +1,12 @@
-import { getMoreFilms } from '../../action';
+import { incrementCounter } from '../../action';
 import { useAppDisptach } from '../../hooks';
+import COUNT_RENDER_FILMS from '../../reducer';
 
 function ShowMoreButton () {
   const dispatch = useAppDisptach();
 
   const clickButtonHandler = () => {
-    dispatch(getMoreFilms());
+    dispatch(incrementCounter(COUNT_RENDER_FILMS));
   };
   return (
     <div className="catalog__more">
