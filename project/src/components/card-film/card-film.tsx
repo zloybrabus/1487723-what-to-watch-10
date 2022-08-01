@@ -6,20 +6,16 @@ import VideoPlayer from '../video-player/video-player';
 
 type CardFilmProps= {
   card: CardFilmType,
-  filmCardTarget: number | undefined,
-  setTarget: React.Dispatch<React.SetStateAction<number | undefined>>
 }
 
-function CardFilm({ card, setTarget, filmCardTarget }: CardFilmProps) {
+function CardFilm({ card }: CardFilmProps) {
   const [isActive, setIsActive] = useState(false);
 
   const handleMouseEnter = () => {
-    setTarget(card.id);
     setIsActive(!isActive);
   };
 
   const handleMouseLeave = () => {
-    setTarget(undefined);
     setIsActive(!isActive);
   };
 

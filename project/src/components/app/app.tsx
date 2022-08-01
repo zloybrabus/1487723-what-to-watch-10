@@ -27,7 +27,6 @@ function App({ cards }: AppProps): JSX.Element {
               title="The Grand Budapest Hotel"
               genre="Drama"
               year={2014}
-              cards={cards}
             />
           }
         />
