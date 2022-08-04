@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+import { CardFilms } from '../types/card-film';
 
 export const Action = {
   CHANGE_GANRE: 'CHANGE_GENRE',
@@ -19,3 +20,5 @@ export const resetCounter = createAction(Action.RESET_COUNTER);
 export const getFilmsWithGenreAction = createAction(Action.GET_FILMS_WITH_GENRE);
 export const resetFilterGenreAction = createAction(Action.RESET_FILTER_GENRE);
 export const getMoreFilms = createAction(Action.GET_MORE_FILMS);
+export const loadFilms = createAction<CardFilms>('data/loadFilms');
+export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');

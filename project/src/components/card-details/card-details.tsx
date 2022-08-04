@@ -22,7 +22,7 @@ function CardDetails({ card }: CardFilmProps): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{TimeMin(card.duration)}</span>
+          <span className="film-card__details-value">{TimeMin(card.runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

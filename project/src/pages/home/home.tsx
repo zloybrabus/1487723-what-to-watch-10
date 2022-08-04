@@ -2,6 +2,8 @@ import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import FilmControls from '../../components/film-controls/film-controls';
 import Catalog from '../../components/catalog/catalog';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import { useAppSelector } from '../../hooks';
 
 type HomeProps = {
   img: string;
@@ -12,6 +14,12 @@ type HomeProps = {
 };
 
 function Home({ img, alt, title, genre, year }: HomeProps): JSX.Element {
+
+  const {films, isDataLoading} = useAppSelector((state) => state);
+  if (isDataLoading || films.length === 0) {
+    return <LoadingScreen />;
+  }
+
   return (
     <>
       <section className="film-card">

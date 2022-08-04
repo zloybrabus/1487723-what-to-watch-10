@@ -17,7 +17,7 @@ function Player({ cards }: CardFilmProps): JSX.Element {
       <video
         src="#"
         className="player__video"
-        poster={card.img}
+        poster={card.posterImage}
       >
       </video>
 

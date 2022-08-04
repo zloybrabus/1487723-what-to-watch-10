@@ -1,6 +1,6 @@
-import { incrementCounter } from '../../action';
+import { incrementCounter } from '../../store/action';
 import { useAppDisptach } from '../../hooks';
-import COUNT_RENDER_FILMS from '../../reducer';
+import COUNT_RENDER_FILMS from '../../store/reducer';
 
 function ShowMoreButton () {
   const dispatch = useAppDisptach();

@@ -2,7 +2,6 @@ import React from 'react';
 import FilmList from '../../components/film-list/film-list';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import { cards } from '../../mocks/film';
 
 
 function MyList(): JSX.Element {
@@ -34,7 +33,7 @@ function MyList(): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmList films={cards} />
+        <FilmList />
       </section>
 
       <Footer />
