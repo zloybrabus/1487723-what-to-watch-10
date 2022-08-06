@@ -1,20 +1,15 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import Home from '../../pages/home/home';
-import AddReview from '../../pages/add-review/add-review';
-import Film from '../../pages/film/film';
-import MyList from '../../pages/my-list/my-list';
-import Player from '../../pages/player/player';
+// import AddReview from '../../pages/add-review/add-review';
+// import Film from '../../pages/film/film';
+// import MyList from '../../pages/my-list/my-list';
+// import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/sign-in';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import PrivateRoute from '../../components/private-route/private-route';
-import { CardFilm as CardFilmType } from '../../types/card-film';
+// import PrivateRoute from '../../components/private-route/private-route';
 
-type AppProps = {
-  cards: CardFilmType[],
-};
-
-function App({ cards }: AppProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -33,20 +28,20 @@ function App({ cards }: AppProps): JSX.Element {
 
         <Route path={AppRoute.SignIn} element={<SignIn />} />
 
-        <Route
+        {/* <Route
           path={AppRoute.MyList}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
               <MyList />
             </PrivateRoute>
           }
-        />
+        /> */}
 
-        <Route path={AppRoute.Film} element={<Film cards={cards} />} />
+        {/* <Route path={AppRoute.Film} element={<Film cards={cards} />} />
 
         <Route path={AppRoute.AddReview} element={<AddReview cards={cards}/>} />
 
-        <Route path={AppRoute.Player} element={<Player cards={cards} />} />
+        <Route path={AppRoute.Player} element={<Player cards={cards} />} /> */}
 
         <Route path='*' element={<NotFoundScreen />} />
       </Routes>

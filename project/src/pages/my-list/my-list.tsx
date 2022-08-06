@@ -1,5 +1,5 @@
 import React from 'react';
-import FilmList from '../../components/film-list/film-list';
+// import FilmList from '../../components/film-list/film-list';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
 
@@ -33,7 +33,7 @@ function MyList(): JSX.Element {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <FilmList />
+        {/* <FilmList /> */}
       </section>
 
       <Footer />

@@ -15,8 +15,9 @@ type HomeProps = {
 
 function Home({ img, alt, title, genre, year }: HomeProps): JSX.Element {
 
-  const {films, isDataLoading} = useAppSelector((state) => state);
-  if (isDataLoading || films.length === 0) {
+  // const {films, isDataLoading} = useAppSelector((state) => state);
+  const {isDataLoading} = useAppSelector((state) => state);
+  if (isDataLoading) {
     return <LoadingScreen />;
   }
 

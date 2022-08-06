@@ -2,8 +2,6 @@ import { createReducer } from '@reduxjs/toolkit';
 import { changeGenreAction, incrementCounter, resetCounter, loadFilms, setDataLoadedStatus } from './action';
 import { CardFilms } from '../types/card-film';
 
-export const COUNT_RENDER_FILMS = 8;
-
 type InitialState = {
   genre: string,
   films: CardFilms,
