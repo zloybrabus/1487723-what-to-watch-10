@@ -21,8 +21,8 @@ function AddReview({cards}: AddReviewProps): JSX.Element {
       <div className="film-card__header">
         <div className="film-card__bg">
           <img
-            src={card.img}
-            alt={card.title}
+            src={card.backgroundImage}
+            alt={card.name}
           />
         </div>
 
@@ -34,7 +34,7 @@ function AddReview({cards}: AddReviewProps): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={generatePath(AppRoute.Film, { id: `${card.id}`} )} className="breadcrumbs__link">{card.title}</Link>
+                <Link to={generatePath(AppRoute.Film, { id: `${card.id}`} )} className="breadcrumbs__link">{card.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <Link className="breadcrumbs__link" to={generatePath(AppRoute.AddReview, { id: `${card.id}` })}>Add review</Link>
@@ -61,8 +61,8 @@ function AddReview({cards}: AddReviewProps): JSX.Element {
 
         <div className="film-card__poster film-card__poster--small">
           <img
-            src={card.img}
-            alt={card.title}
+            src={card.posterImage}
+            alt={card.name}
             width="218"
             height="327"
           />

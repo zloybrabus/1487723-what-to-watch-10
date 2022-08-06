@@ -19,8 +19,14 @@ export enum CardTabName {
     Reviews = 'REVIEWS'
   }
 
+export enum APIRoute {
+    Films = '/films',
+}
+
 export const TimeMin = (mins: number): string => {
   const hour = Math.trunc(mins / 60);
-  const minut = mins % 60;
-  return `${hour}hour ${minut}minut`;
+  const minute = mins % 60;
+  return `${hour}h ${minute}m`;
 };
+
+export const COUNT_RENDER_FILMS = 8;

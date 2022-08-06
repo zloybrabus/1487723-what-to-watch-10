@@ -23,8 +23,8 @@ function Film({ cards }: CardFilmProps): JSX.Element {
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img
-              src={card.img}
-              alt={card.title}
+              src={card.backgroundImage}
+              alt={card.name}
             />
           </div>
 
@@ -33,7 +33,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{card.title}</h2>
+              <h2 className="film-card__title">{card.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{card.genre}</span>
                 <span className="film-card__year">{card.released}</span>
@@ -69,8 +69,8 @@ function Film({ cards }: CardFilmProps): JSX.Element {
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
               <img
-                src={card.img}
-                alt={card.title}
+                src={card.posterImage}
+                alt={card.name}
                 width="218"
                 height="327"
               />

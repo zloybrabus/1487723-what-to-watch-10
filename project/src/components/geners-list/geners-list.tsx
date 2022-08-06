@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { changeGenreAction, resetCounter } from '../../action';
+import { changeGenreAction, resetCounter } from '../../store/action';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { genres } from '../../mocks/genres';
 import cn from 'classnames';

@@ -1,16 +1,16 @@
-import { incrementCounter } from '../../action';
+import { incrementCounter } from '../../store/action';
 import { useAppDisptach } from '../../hooks';
-import COUNT_RENDER_FILMS from '../../reducer';
+import { COUNT_RENDER_FILMS } from './../../const';
 
 function ShowMoreButton () {
   const dispatch = useAppDisptach();
 
-  const clickButtonHandler = () => {
+  const handleClick = () => {
     dispatch(incrementCounter(COUNT_RENDER_FILMS));
   };
   return (
     <div className="catalog__more">
-      <button onClick={clickButtonHandler} className='catalog__button' type="button">Show more</button>
+      <button onClick={handleClick} className='catalog__button' type="button">Show more</button>
     </div>
   );
 }

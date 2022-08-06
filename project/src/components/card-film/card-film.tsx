@@ -23,11 +23,11 @@ function CardFilm({ card }: CardFilmProps) {
     <article className="small-film-card catalog__films-card" id={`${card.id}`} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <div className="small-film-card__image">
         {isActive
-          ? <VideoPlayer img={card.img} video={card.videoLink} />
-          : <img src={card.img} alt={card.title} width="280" height="175" />}
+          ? <VideoPlayer img={card.previewImage} video={card.videoLink} />
+          : <img src={card.previewImage} alt={card.name} width="280" height="175" />}
       </div>
       <h3 className="small-film-card__title">
-        <Link className="small-film-card__link" to={generatePath(AppRoute.Film, { id: `${card.id}` })}>{card.title}</Link>
+        <Link className="small-film-card__link" to={generatePath(AppRoute.Film, { id: `${card.id}` })}>{card.name}</Link>
       </h3>
     </article>
   );
