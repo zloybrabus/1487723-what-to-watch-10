@@ -14,7 +14,7 @@ function UserBlock():JSX.Element {
     <ul className="user-block">
       <li className="user-block__item" onClick={()=>navigate('/mylist')}>
         <div className="user-block__avatar">
-          <img src={authorizationStatus === AuthorizationStatus.Auth ? '?' : 'img/avatar.jpg'} alt="User avatar" width="63" height="63" />
+          <img src={authorizationStatus === AuthorizationStatus.Auth ? 'https://10.react.pages.academy/static/avatar/3.jpg' : 'img/avatar.jpg'} alt="User avatar" width="63" height="63" />
         </div>
       </li>
       <li className="user-block__item">

@@ -21,4 +21,5 @@ export const resetCounter = createAction(Action.RESET_COUNTER);
 export const loadFilms = createAction<CardFilms>('data/loadFilms');
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 export const requireAuth = createAction<AuthorizationStatus>('user/requireAuth');
+export const setError = createAction<string | null | unknown>('user/setError');
 export const redirectToRoute = createAction<AppRoute>('main/redirectToRoute');

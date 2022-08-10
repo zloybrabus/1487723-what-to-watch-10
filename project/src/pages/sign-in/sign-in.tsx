@@ -1,30 +1,36 @@
 import Footer from '../../components/footer/footer';
 import Header from '../../components/header/header';
-import React, { FormEvent, useRef } from 'react';
-import { useAppDisptach } from '../../hooks/index';
+import { useNavigate } from 'react-router-dom';
+import React, { FormEvent, useRef, useEffect } from 'react';
+import { useAppDisptach, useAppSelector } from '../../hooks/index';
 import { loginAction } from '../../store/api-action';
-import { Auth } from '../../types/auth';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import MessageError from '../../components/login-error/login-error'
 
 function SignIn (): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-
   const dispatch = useAppDisptach();
-
-  const onSubmit = (auth: Auth) => {
-    dispatch(loginAction(auth));
-  };
+  const error = useAppSelector((state) => state.error);
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const navigate = useNavigate();
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      onSubmit({
-        login: loginRef.current.value,
-        password: passwordRef.current.value,
-      });
+  if (loginRef.current !== null && passwordRef.current !== null) {
+    dispatch(loginAction({
+      login: loginRef.current.value,
+      password: passwordRef.current.value,
+    }));
+  }
+};
+
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      navigate(AppRoute.Main);
     }
-  };
+  }, [authStatus, navigate]);
 
   return (
     <div className="user-page">
@@ -32,7 +38,8 @@ function SignIn (): JSX.Element {
 
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__htmlForm" onSubmit={handleSubmit}>
-          <div className="sign-in__fields">
+        {error ? <MessageError /> : null}
+          <div className={error ? 'sign-in__field sign-in__field--error' : 'sign-in__field'}>
             <div className="sign-in__field">
               <input
                 ref={loginRef}
@@ -51,6 +58,7 @@ function SignIn (): JSX.Element {
             </div>
             <div className="sign-in__field">
               <input
+                minLength={2}
                 ref={passwordRef}
                 className="sign-in__input"
                 type="password"
