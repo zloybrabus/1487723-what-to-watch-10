@@ -5,7 +5,7 @@ import React, { FormEvent, useRef, useEffect } from 'react';
 import { useAppDisptach, useAppSelector } from '../../hooks/index';
 import { loginAction } from '../../store/api-action';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import MessageError from '../../components/login-error/login-error'
+import MessageError from '../../components/login-error/login-error';
 
 function SignIn (): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -18,13 +18,13 @@ function SignIn (): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-  if (loginRef.current !== null && passwordRef.current !== null) {
-    dispatch(loginAction({
-      login: loginRef.current.value,
-      password: passwordRef.current.value,
-    }));
-  }
-};
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      dispatch(loginAction({
+        login: loginRef.current.value,
+        password: passwordRef.current.value,
+      }));
+    }
+  };
 
   useEffect(() => {
     if (authStatus === AuthorizationStatus.Auth) {
@@ -38,7 +38,7 @@ function SignIn (): JSX.Element {
 
       <div className="sign-in user-page__content">
         <form action="#" className="sign-in__htmlForm" onSubmit={handleSubmit}>
-        {error ? <MessageError /> : null}
+          {error ? <MessageError /> : null}
           <div className={error ? 'sign-in__field sign-in__field--error' : 'sign-in__field'}>
             <div className="sign-in__field">
               <input
