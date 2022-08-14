@@ -21,6 +21,8 @@ export enum CardTabName {
 
 export enum APIRoute {
     Films = '/films',
+    Login = '/login',
+    Logout = '/logout',
 }
 
 export const TimeMin = (mins: number): string => {
