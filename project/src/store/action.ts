@@ -1,5 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
 import { CardFilms } from '../types/card-film';
+import { Comments, AnswerSendComments } from '../types/review';
 import { AppRoute, AuthorizationStatus } from '../const';
 
 export const Action = {
@@ -23,3 +24,5 @@ export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStat
 export const requireAuth = createAction<AuthorizationStatus>('user/requireAuth');
 export const setError = createAction<string | null | unknown>('user/setError');
 export const redirectToRoute = createAction<AppRoute>('main/redirectToRoute');
+export const getCommentsFilm = createAction<Comments>('comments/getCommentsFilm');
+export const setCommentsFilm = createAction<AnswerSendComments>('comments/setCommentsFilm');

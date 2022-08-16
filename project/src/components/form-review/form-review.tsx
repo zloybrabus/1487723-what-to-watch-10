@@ -1,12 +1,24 @@
-import React, {useState, ChangeEvent, FormEvent} from 'react';
+import React, { SyntheticEvent, useEffect, useState, ChangeEvent, FormEvent } from 'react';
+import { useAppDisptach, useAppSelector } from '../../hooks';
+import { addCommentFilm } from '../../store/api-action';
+import { AddReviewObj } from '../../types/review';
+
+const initStateObj: AddReviewObj = {
+  comment: '',
+  date: '',
+  id: 0,
+  rating: 0,
+  user: {
+    id: 0,
+    name: ''
+  }
+};
 
 const ratingValues: number[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
-function FormReview(): JSX.Element {
-
-  const [inputData, setFormInput] = useState({
+function FormReview():JSX.Element {
+    const [inputData, setFormInput] = useState({
     rating: '',
-    reviewText: '',
   });
 
   const inputChangeHandler = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -14,13 +26,31 @@ function FormReview(): JSX.Element {
     const {value, name} = evt.target;
     setFormInput({
       ...inputData,
-      [name]: value,
     });
   };
-
-  const postForm = (evt: FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
+  
+  const dispatch = useAppDisptach();
+  const {films} = useAppSelector((state) => state);
+  const [formData, setFormData] = useState(initStateObj);
+  const formChangeHandler = (event: SyntheticEvent): void => {
+    const {name, value} = event.target as HTMLTextAreaElement;
+    setFormData({...formData, [name]: value});
   };
+
+  const postForm = (event: SyntheticEvent):void => {
+    event.preventDefault();
+    const {comment, rating, id} = formData;
+    const rewiew = {
+      id,
+      comment,
+      rating,
+    };
+    dispatch(addCommentFilm(rewiew));
+  };
+
+  useEffect(()=>{
+    setFormData((formDataPrev)=>({...formDataPrev, id: films.id}));
+  },[films]);
 
   return (
     <div className="add-review">
@@ -46,17 +76,11 @@ function FormReview(): JSX.Element {
         </div>
 
         <div className="add-review__text">
-          <textarea
-            className="add-review__textarea"
-            name="reviewText" id="reviewText"
-            placeholder="Review text"
-            onChange={inputChangeHandler}
-            value={inputData.reviewText}
-          >
-          </textarea>
+          <textarea className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" onChange={formChangeHandler}></textarea>
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Добавить отзыв</button>
+            <button className="add-review__btn" type="submit">Post</button>
           </div>
+
         </div>
       </form>
     </div>

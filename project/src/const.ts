@@ -5,6 +5,7 @@ export enum AppRoute {
     Film = '/films/:id',
     AddReview = '/films/:id/review',
     Player = '/player/:id',
+    ReturnPage = '/films',
 }
 
 export enum AuthorizationStatus {
@@ -23,6 +24,7 @@ export enum APIRoute {
     Films = '/films',
     Login = '/login',
     Logout = '/logout',
+    Comments ='/comments',
 }
 
 export const TimeMin = (mins: number): string => {
