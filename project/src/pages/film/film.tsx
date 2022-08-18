@@ -2,10 +2,12 @@ import React from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { CardFilms } from '../../types/card-film';
-import { useParams, Link, Navigate, generatePath } from 'react-router-dom';
+import { useParams, Link, generatePath } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import CardTabs from '../../components/card-tabs/card-tabs';
 import FilmList from '../../components/film-list/film-list';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type CardFilmProps= {
   cards: CardFilms;
@@ -14,18 +16,22 @@ type CardFilmProps= {
 function Film({ cards }: CardFilmProps): JSX.Element {
   const { id } = useParams();
   const {authorizationStatus} = useAppSelector((state) => state);
-  const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
-  if (!card) {
-    return <Navigate to="/" />;
+  const { isFilmLoading } = useAppSelector((state) => state);
+  const { card } = useAppSelector((state) => state);
+  // const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
+
+  if (!isFilmLoading || card) {
+    <LoadingScreen />
   }
+  
   return (
     <React.Fragment>
       <section className="film-card film-card--full">
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img
-              src={card.backgroundImage}
-              alt={card.name}
+              src={card?.backgroundImage}
+              alt={card?.name}
             />
           </div>
 
@@ -34,10 +40,10 @@ function Film({ cards }: CardFilmProps): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{card.name}</h2>
+              <h2 className="film-card__title">{card?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{card.genre}</span>
-                <span className="film-card__year">{card.released}</span>
+                <span className="film-card__genre">{card?.genre}</span>
+                <span className="film-card__year">{card?.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -70,8 +76,8 @@ function Film({ cards }: CardFilmProps): JSX.Element {
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
               <img
-                src={card.posterImage}
-                alt={card.name}
+                src={card?.posterImage}
+                alt={card?.name}
                 width="218"
                 height="327"
               />

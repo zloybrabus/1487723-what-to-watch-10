@@ -1,56 +1,42 @@
+import { type } from 'os';
 import React, { SyntheticEvent, useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { addCommentFilm } from '../../store/api-action';
-import { AddReviewObj } from '../../types/review';
-
-const initStateObj: AddReviewObj = {
-  comment: '',
-  date: '',
-  id: 0,
-  rating: 0,
-  user: {
-    id: 0,
-    name: ''
-  }
-};
 
 const ratingValues: number[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
-function FormReview():JSX.Element {
-    const [inputData, setFormInput] = useState({
-    rating: '',
-  });
+const initState = {
+  comment: '',
+  rating: 0,
+};
 
-  const inputChangeHandler = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+type FormReviewProps = {
+  id: string,
+}
 
+function FormReview({ id }: FormReviewProps):JSX.Element {
+  const dispatch = useAppDisptach();
+  // const {films} = useAppSelector((state) => state);
+  const [formData, setFormData] = useState(initState);
+
+  const handleChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const {value, name} = evt.target;
-    setFormInput({
-      ...inputData,
+    setFormData({
+      ...formData,
+      [name]: value,
     });
   };
-  
-  const dispatch = useAppDisptach();
-  const {films} = useAppSelector((state) => state);
-  const [formData, setFormData] = useState(initStateObj);
-  const formChangeHandler = (event: SyntheticEvent): void => {
-    const {name, value} = event.target as HTMLTextAreaElement;
-    setFormData({...formData, [name]: value});
-  };
 
-  const postForm = (event: SyntheticEvent):void => {
-    event.preventDefault();
-    const {comment, rating, id} = formData;
-    const rewiew = {
+  const postForm = (evt: FormEvent):void => {
+    evt.preventDefault();
+    const {comment, rating} = formData;
+    const review = {
       id,
       comment,
       rating,
     };
-    dispatch(addCommentFilm(rewiew));
+    dispatch(addCommentFilm(review));
   };
-
-  useEffect(()=>{
-    setFormData((formDataPrev)=>({...formDataPrev, id: films.id}));
-  },[films]);
 
   return (
     <div className="add-review">
@@ -66,7 +52,7 @@ function FormReview():JSX.Element {
                     type="radio"
                     name="rating"
                     value={score}
-                    onChange={inputChangeHandler}
+                    onChange={handleChange}
                   />
                   <label className="rating__label" htmlFor={`star-${score}`}>Rating {score}</label>
                 </React.Fragment>
@@ -76,7 +62,12 @@ function FormReview():JSX.Element {
         </div>
 
         <div className="add-review__text">
-          <textarea className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" onChange={formChangeHandler}></textarea>
+          <textarea
+            className="add-review__textarea"
+            name="comment" id="review-text"
+            placeholder="Review text"
+            onChange={handleChange}>
+          </textarea>
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>

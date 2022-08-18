@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeGenreAction, incrementCounter, resetCounter, loadFilms, setDataLoadedStatus, requireAuth, setError, getCommentsFilm } from './action';
-import { CardFilms } from '../types/card-film';
+import { changeGenreAction, incrementCounter, resetCounter, loadFilms, loadFilm, setDataLoadedStatus, requireAuth, setError, getCommentsFilm } from './action';
+import { CardFilm, CardFilms } from '../types/card-film';
 import { AuthorizationStatus } from '../const';
 import { Comments } from '../types/review';
 
@@ -9,6 +9,9 @@ type InitialState = {
   films: CardFilms,
   countRenderFilms: number,
   isDataLoading: boolean,
+  isFilmLoading: boolean,
+  isCommentLoading: boolean,
+  card: CardFilm | null,
   currentFilmComments: Comments
   error: string | null | unknown,
   authorizationStatus: AuthorizationStatus,
@@ -19,6 +22,9 @@ export const initialState: InitialState = {
   films: [],
   currentFilmComments: [],
   countRenderFilms: 8,
+  isCommentLoading: false,
+  isFilmLoading: false,
+  card: null,
   error: null,
   isDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -37,6 +43,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFilms, (state, action) => {
       state.films = action.payload;
+    })
+    .addCase(loadFilm, (state, action) => {
+      state.film = action.payload;
     })
     .addCase(setDataLoadedStatus, (state, action) => {
       state.isDataLoading = action.payload;

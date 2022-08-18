@@ -69,7 +69,7 @@ function AddReview({cards}: AddReviewProps): JSX.Element {
         </div>
       </div>
 
-      <FormReview />
+      <FormReview id={id} />
     </section>
   );
 }
