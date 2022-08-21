@@ -11,7 +11,7 @@ type InitialState = {
   isDataLoading: boolean,
   isFilmLoading: boolean,
   isCommentLoading: boolean,
-  card: CardFilm | null,
+  film: CardFilm | null,
   currentFilmComments: Comments
   error: string | null | unknown,
   authorizationStatus: AuthorizationStatus,
@@ -24,7 +24,7 @@ export const initialState: InitialState = {
   countRenderFilms: 8,
   isCommentLoading: false,
   isFilmLoading: false,
-  card: null,
+  film: null,
   error: null,
   isDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,

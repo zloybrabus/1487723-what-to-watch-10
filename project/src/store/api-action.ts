@@ -8,7 +8,6 @@ import { User } from '../types/user';
 import { Auth } from '../types/auth';
 import { loadFilms, loadFilm, redirectToRoute, requireAuth, setDataLoadedStatus, setError, getCommentsFilm, setCommentsFilm } from './action';
 import { Comments, AnswerSendComments } from '../types/review';
-import { url } from 'inspector';
 
 export const fetchFilmsDataAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch,
@@ -44,10 +43,10 @@ export const fetchCommentsFilm = createAsyncThunk<void, number, {
   extra: AxiosInstance
 }>(
   'comments/fetchCommentsFilms',
-  async (id, {dispatch, extra: api}) => {
+  async (filmId, {dispatch, extra: api}) => {
   dispatch(setDataLoadedStatus(true));
     try{
-      const {data} = await api.get<Comments>(`${APIRoute.Comments}/${id}`);
+      const {data} = await api.get<Comments>(`${APIRoute.Comments}/${filmId}`);
       dispatch(getCommentsFilm(data));
       dispatch(setDataLoadedStatus(false));
     }catch{

@@ -1,7 +1,7 @@
 import { type } from 'os';
 import React, { SyntheticEvent, useEffect, useState, ChangeEvent, FormEvent } from 'react';
 import { useAppDisptach, useAppSelector } from '../../hooks';
-import { addCommentFilm } from '../../store/api-action';
+// import { addCommentFilm } from '../../store/api-action';
 
 const ratingValues: number[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
@@ -11,7 +11,7 @@ const initState = {
 };
 
 type FormReviewProps = {
-  id: string,
+  id: string | undefined,
 }
 
 function FormReview({ id }: FormReviewProps):JSX.Element {
@@ -35,7 +35,7 @@ function FormReview({ id }: FormReviewProps):JSX.Element {
       comment,
       rating,
     };
-    dispatch(addCommentFilm(review));
+    // dispatch(addCommentFilm(review));
   };
 
   return (
