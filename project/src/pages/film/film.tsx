@@ -1,48 +1,37 @@
 import React, { useEffect } from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import { CardFilms } from '../../types/card-film';
 import { useParams, Link, generatePath } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import CardTabs from '../../components/card-tabs/card-tabs';
 import FilmList from '../../components/film-list/film-list';
 import { useAppSelector, useAppDisptach } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { fetchFilm, fetchCommentsFilm } from '../../store/api-action';
+import { fetchFilm, fetchCommentsFilm, fetchSimilar } from '../../store/api-action';
 
-type CardFilmProps= {
-  cards: CardFilms;
-}
-
-function Film({ cards }: CardFilmProps): JSX.Element {
+function Film(): JSX.Element {
   const dispatch = useAppDisptach();
   const { id } = useParams();
   const {authorizationStatus} = useAppSelector((state) => state);
   const { isFilmLoading } = useAppSelector((state) => state);
   const { isCommentLoading } = useAppSelector((state) => state);
-  const { currentFilmComments } = useAppSelector((state) => state);
   const { film } = useAppSelector((state) => state);
+  const { similarFilms } = useAppSelector((state) => state);
 
   useEffect(() => {
     if (!id) {
-      return
+      return;
     }
 
-    dispatch(fetchFilm(+id))
+    dispatch(fetchFilm(+id));
+    dispatch(fetchSimilar(id));
+    dispatch(fetchCommentsFilm(+id));
   },[dispatch, id]);
 
-  useEffect(() => {
-    if (!id) {
-      return
-    }
-
-    dispatch(fetchCommentsFilm(+id))
-  },[dispatch, id]);
 
   if (isFilmLoading || !film || isCommentLoading) {
-    return <LoadingScreen />
+    return <LoadingScreen />;
   }
-  
   return (
     <React.Fragment>
       <section className="film-card film-card--full">
@@ -83,12 +72,17 @@ function Film({ cards }: CardFilmProps): JSX.Element {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{cards.length}</span>
+                  {
+                    <span className="film-card__count">
+                    </span>
+                  }
                 </button>
-                {(authorizationStatus === AuthorizationStatus.Auth) && (
+
+                {(authorizationStatus === AuthorizationStatus.Auth) &&
+                (
                   <Link
-                  to={generatePath(AppRoute.AddReview, { id: `${film.id}` })}
-                  className="btn film-card__button"
+                    to={generatePath(AppRoute.AddReview, { id: `${film.id}` })}
+                    className="btn film-card__button"
                   >
                   Add review
                   </Link>
@@ -118,7 +112,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={cards} />
+          <FilmList films={similarFilms} />
         </section>
 
         <Footer />

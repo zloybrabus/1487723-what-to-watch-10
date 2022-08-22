@@ -1,28 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Logo from '../../components/logo/logo';
-import { CardFilms } from '../../types/card-film';
-import {useParams, Link, Navigate, generatePath} from 'react-router-dom';
+import {useParams, Link, generatePath} from 'react-router-dom';
 import FormReview from '../../components/form-review/form-review';
 import { AppRoute } from '../../const';
+import { fetchFilm } from '../../store/api-action';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { useAppSelector, useAppDisptach } from '../../hooks';
 
-type AddReviewProps = {
-  cards: CardFilms;
-}
-
-function AddReview({cards}: AddReviewProps): JSX.Element {
+function AddReview(): JSX.Element {
   const { id } = useParams();
-  const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
-  if (!card) {
-    return <Navigate to="/" />;
-  }
+  const dispatch = useAppDisptach();
+  const { isFilmLoading } = useAppSelector((state) => state);
+  const { film } = useAppSelector((state) => state);
 
+  useEffect(() => {
+    if (!id || film) {
+      return;
+    }
+
+    dispatch(fetchFilm(+id));
+  },[dispatch, film, id]);
+
+
+  if (isFilmLoading || !film) {
+    return <LoadingScreen />;
+  }
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
           <img
-            src={card.backgroundImage}
-            alt={card.name}
+            src={film.backgroundImage}
+            alt={film.name}
           />
         </div>
 
@@ -34,10 +43,10 @@ function AddReview({cards}: AddReviewProps): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={generatePath(AppRoute.Film, { id: `${card.id}`} )} className="breadcrumbs__link">{card.name}</Link>
+                <Link to={generatePath(AppRoute.Film, { id: `${film.id}`} )} className="breadcrumbs__link">{film.name}</Link>
               </li>
               <li className="breadcrumbs__item">
-                <Link className="breadcrumbs__link" to={generatePath(AppRoute.AddReview, { id: `${card.id}` })}>Add review</Link>
+                <Link className="breadcrumbs__link" to={generatePath(AppRoute.AddReview, { id: `${film.id}` })}>Add review</Link>
               </li>
             </ul>
           </nav>
@@ -61,15 +70,15 @@ function AddReview({cards}: AddReviewProps): JSX.Element {
 
         <div className="film-card__poster film-card__poster--small">
           <img
-            src={card.posterImage}
-            alt={card.name}
+            src={film.posterImage}
+            alt={film.name}
             width="218"
             height="327"
           />
         </div>
       </div>
 
-      <FormReview id={id} />
+      <FormReview id={id || '0'} />
     </section>
   );
 }

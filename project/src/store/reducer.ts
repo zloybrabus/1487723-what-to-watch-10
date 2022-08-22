@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeGenreAction, incrementCounter, resetCounter, loadFilms, loadFilm, setDataLoadedStatus, requireAuth, setError, getCommentsFilm } from './action';
+import { changeGenreAction, incrementCounter, resetCounter, loadFilms, loadFilm, setDataLoadedStatus, requireAuth, setError, getCommentsFilm, fetchSimilarFilms } from './action';
 import { CardFilm, CardFilms } from '../types/card-film';
 import { AuthorizationStatus } from '../const';
 import { Comments } from '../types/review';
@@ -12,6 +12,7 @@ type InitialState = {
   isFilmLoading: boolean,
   isCommentLoading: boolean,
   film: CardFilm | null,
+  similarFilms: CardFilms,
   currentFilmComments: Comments
   error: string | null | unknown,
   authorizationStatus: AuthorizationStatus,
@@ -24,6 +25,7 @@ export const initialState: InitialState = {
   countRenderFilms: 8,
   isCommentLoading: false,
   isFilmLoading: false,
+  similarFilms: [],
   film: null,
   error: null,
   isDataLoading: false,
@@ -55,6 +57,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(getCommentsFilm, (state, action) => {
       state.currentFilmComments = action.payload;
+    })
+    .addCase(fetchSimilarFilms, (state, action) => {
+      state.similarFilms = action.payload;
     })
     .addCase(requireAuth, (state, action) => {
       state.authorizationStatus = action.payload;

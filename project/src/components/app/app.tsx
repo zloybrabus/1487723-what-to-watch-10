@@ -4,7 +4,7 @@ import Home from '../../pages/home/home';
 import AddReview from '../../pages/add-review/add-review';
 import Film from '../../pages/film/film';
 import MyList from '../../pages/my-list/my-list';
-import Player from '../../pages/player/player';
+// import Player from '../../pages/player/player';
 import SignIn from '../../pages/sign-in/sign-in';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import { isCheckedAuth } from '../../main';
@@ -15,7 +15,7 @@ import HistoryRouter from '../history-router/history-router';
 import PrivateRoute from '../../components/private-route/private-route';
 
 function App(): JSX.Element {
-  const {films, authorizationStatus} = useAppSelector((state) => state);
+  const { authorizationStatus} = useAppSelector((state) => state);
   if (isCheckedAuth(authorizationStatus)) {
     return <LoadingScreen />;
   }
@@ -46,11 +46,18 @@ function App(): JSX.Element {
           }
         />
 
-        <Route path={AppRoute.Film} element={<Film cards={films} />} />
+        <Route
+          path={AppRoute.AddReview}
+          element={
+            <PrivateRoute>
+              <AddReview />
+            </PrivateRoute>
+          }
+        />
 
-        <Route path={AppRoute.AddReview} element={<AddReview cards={films}/>} />
+        <Route path={AppRoute.Film} element={<Film />} />
 
-        <Route path={AppRoute.Player} element={<Player cards={films} />} />
+        {/* <Route path={AppRoute.Player} element={<Player cards={films} />} /> */}
 
         <Route path='*' element={<NotFoundScreen />} />
       </Routes>

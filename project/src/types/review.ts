@@ -23,9 +23,9 @@ type CommentData = {
 type Comments = CommentData[] | []
 
 type CommentAdd = {
-  id: number
-  comment: string
-  rating: number
+  id: string,
+  comment: string,
+  rating: string,
 }
 
 type AnswerSendCommentError = {

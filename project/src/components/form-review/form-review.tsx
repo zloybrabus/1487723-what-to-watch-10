@@ -1,22 +1,20 @@
-import { type } from 'os';
-import React, { SyntheticEvent, useEffect, useState, ChangeEvent, FormEvent } from 'react';
-import { useAppDisptach, useAppSelector } from '../../hooks';
-// import { addCommentFilm } from '../../store/api-action';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { useAppDisptach } from '../../hooks';
+import { addCommentFilm } from '../../store/api-action';
 
 const ratingValues: number[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
 const initState = {
   comment: '',
-  rating: 0,
+  rating: '0',
 };
 
 type FormReviewProps = {
-  id: string | undefined,
+  id: string,
 }
 
 function FormReview({ id }: FormReviewProps):JSX.Element {
   const dispatch = useAppDisptach();
-  // const {films} = useAppSelector((state) => state);
   const [formData, setFormData] = useState(initState);
 
   const handleChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -35,7 +33,7 @@ function FormReview({ id }: FormReviewProps):JSX.Element {
       comment,
       rating,
     };
-    // dispatch(addCommentFilm(review));
+    dispatch(addCommentFilm(review));
   };
 
   return (
@@ -66,8 +64,8 @@ function FormReview({ id }: FormReviewProps):JSX.Element {
             className="add-review__textarea"
             name="comment" id="review-text"
             placeholder="Review text"
-            onChange={handleChange}>
-          </textarea>
+            onChange={handleChange}
+          />
           <div className="add-review__submit">
             <button className="add-review__btn" type="submit">Post</button>
           </div>
