@@ -1,4 +1,4 @@
-import { CardFilm as CardFilmType } from '../../types/card-film';
+import { CardFilm } from '../../types/card-film';
 import { useState } from 'react';
 import CardReviews from '../card-review/card-review';
 import CardDetails from '../card-details/card-details';
@@ -7,7 +7,7 @@ import { CardTabName } from '../../const';
 import cn from 'classnames';
 
 type CardOverviewProps = {
-  card: CardFilmType
+  card: CardFilm
 }
 
 function CardTabs({ card }: CardOverviewProps): JSX.Element {

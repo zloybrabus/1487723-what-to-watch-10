@@ -1,25 +1,39 @@
-import React, {useState, ChangeEvent, FormEvent} from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { useAppDisptach } from '../../hooks';
+import { addCommentFilm } from '../../store/api-action';
 
 const ratingValues: number[] = [10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
-function FormReview(): JSX.Element {
+const initState = {
+  comment: '',
+  rating: '0',
+};
 
-  const [inputData, setFormInput] = useState({
-    rating: '',
-    reviewText: '',
-  });
+type FormReviewProps = {
+  id: string,
+}
 
-  const inputChangeHandler = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+function FormReview({ id }: FormReviewProps):JSX.Element {
+  const dispatch = useAppDisptach();
+  const [formData, setFormData] = useState(initState);
 
+  const handleChange = (evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const {value, name} = evt.target;
-    setFormInput({
-      ...inputData,
+    setFormData({
+      ...formData,
       [name]: value,
     });
   };
 
-  const postForm = (evt: FormEvent<HTMLFormElement>) => {
+  const postForm = (evt: FormEvent):void => {
     evt.preventDefault();
+    const {comment, rating} = formData;
+    const review = {
+      id,
+      comment,
+      rating,
+    };
+    dispatch(addCommentFilm(review));
   };
 
   return (
@@ -36,7 +50,7 @@ function FormReview(): JSX.Element {
                     type="radio"
                     name="rating"
                     value={score}
-                    onChange={inputChangeHandler}
+                    onChange={handleChange}
                   />
                   <label className="rating__label" htmlFor={`star-${score}`}>Rating {score}</label>
                 </React.Fragment>
@@ -48,15 +62,14 @@ function FormReview(): JSX.Element {
         <div className="add-review__text">
           <textarea
             className="add-review__textarea"
-            name="reviewText" id="reviewText"
+            name="comment" id="review-text"
             placeholder="Review text"
-            onChange={inputChangeHandler}
-            value={inputData.reviewText}
-          >
-          </textarea>
+            onChange={handleChange}
+          />
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Добавить отзыв</button>
+            <button className="add-review__btn" type="submit">Post</button>
           </div>
+
         </div>
       </form>
     </div>

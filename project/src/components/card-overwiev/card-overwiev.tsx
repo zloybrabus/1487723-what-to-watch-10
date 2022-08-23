@@ -23,10 +23,7 @@ function CardOverview({ card }: FilmOverwievProps): JSX.Element {
         </p>
 
         <p className="film-card__starring">
-          <strong className="film-card__details-name">Starring</strong>
-          <span className="film-card__details-value">
-            {card.starring.map((item) => <span key={item}>{item} </span>)}
-          </span>
+          <strong>Starring: {card.starring.join(', ')}</strong>
         </p>
       </div>
     </>

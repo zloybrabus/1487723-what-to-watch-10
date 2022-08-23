@@ -10,12 +10,12 @@ function CardDetails({ card }: CardFilmProps): JSX.Element {
     <div className="film-card__text film-card__row">
       <div className="film-card__text-col">
         <p className="film-card__details-item">
-          <strong className="film-card__details-name">Director</strong>
+          <strong className="film-card__details-name huy">Director</strong>
           <span className="film-card__details-value">{card.director}</span>
         </p>
         <p className="film-card__details-item">
-          <strong className="film-card__details-name">Starring</strong>
-          <span className="film-card__details-value">{card.starring.map((item) => <span key={item}>{item} </span>)}</span>
+          <strong className="film-card__details-name">Starringqsd</strong>
+          {card.starring.map((item,i)=>(<span className="film-card__details-value" key={item}>{`${item}${i === card.starring.length - 1 ? '' : ',' }`}</span>))}
         </p>
       </div>
 

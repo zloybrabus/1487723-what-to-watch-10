@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
-import { CardFilms } from '../types/card-film';
-import { AppRoute, AuthorizationStatus } from '../const';
+import { CardFilms, CardFilm } from '../types/card-film';
+import { Comments, AnswerSendComments } from '../types/review';
+import { AuthorizationStatus } from '../const';
 
 export const Action = {
   CHANGE_GENRE: 'app/changeGenre',
@@ -19,7 +20,11 @@ export const incrementCounter = createAction(
 
 export const resetCounter = createAction(Action.RESET_COUNTER);
 export const loadFilms = createAction<CardFilms>('data/loadFilms');
+export const fetchSimilarFilms = createAction<CardFilms>('data/similar');
+export const loadFilm = createAction<CardFilm>('data/loadFilm');
 export const setDataLoadedStatus = createAction<boolean>('data/setDataLoadedStatus');
 export const requireAuth = createAction<AuthorizationStatus>('user/requireAuth');
 export const setError = createAction<string | null | unknown>('user/setError');
-export const redirectToRoute = createAction<AppRoute>('main/redirectToRoute');
+export const redirectToRoute = createAction<string>('main/redirectToRoute');
+export const getCommentsFilm = createAction<Comments>('comments/getCommentsFilm');
+export const setCommentsFilm = createAction<AnswerSendComments>('comments/setCommentsFilm');

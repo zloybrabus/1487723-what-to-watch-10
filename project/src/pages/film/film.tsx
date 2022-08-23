@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
-import { CardFilms } from '../../types/card-film';
-import { useParams, Link, Navigate, generatePath } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { useParams, Link, generatePath } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import CardTabs from '../../components/card-tabs/card-tabs';
 import FilmList from '../../components/film-list/film-list';
+import { useAppSelector, useAppDisptach } from '../../hooks';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { fetchFilm, fetchCommentsFilm, fetchSimilar } from '../../store/api-action';
 
-type CardFilmProps= {
-  cards: CardFilms;
-}
-
-function Film({ cards }: CardFilmProps): JSX.Element {
+function Film(): JSX.Element {
+  const dispatch = useAppDisptach();
   const { id } = useParams();
-  const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
-  if (!card) {
-    return <Navigate to="/" />;
+  const {authorizationStatus} = useAppSelector((state) => state);
+  const { isFilmLoading } = useAppSelector((state) => state);
+  const { isCommentLoading } = useAppSelector((state) => state);
+  const { film } = useAppSelector((state) => state);
+  const { similarFilms } = useAppSelector((state) => state);
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+
+    dispatch(fetchFilm(+id));
+    dispatch(fetchSimilar(id));
+    dispatch(fetchCommentsFilm(+id));
+  },[dispatch, id]);
+
+
+  if (isFilmLoading || !film || isCommentLoading) {
+    return <LoadingScreen />;
   }
   return (
     <React.Fragment>
@@ -23,8 +38,8 @@ function Film({ cards }: CardFilmProps): JSX.Element {
         <div className="film-card__hero">
           <div className="film-card__bg">
             <img
-              src={card.backgroundImage}
-              alt={card.name}
+              src={film.backgroundImage}
+              alt={film.name}
             />
           </div>
 
@@ -33,10 +48,10 @@ function Film({ cards }: CardFilmProps): JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{card.name}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{card.genre}</span>
-                <span className="film-card__year">{card.released}</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -57,9 +72,21 @@ function Film({ cards }: CardFilmProps): JSX.Element {
                     <use xlinkHref="#add"></use>
                   </svg>
                   <span>My list</span>
-                  <span className="film-card__count">{cards.length}</span>
+                  {
+                    <span className="film-card__count">
+                    </span>
+                  }
                 </button>
-                <Link to={generatePath(AppRoute.AddReview, { id: `${card.id}` })} className="btn film-card__button">Add review</Link>
+
+                {(authorizationStatus === AuthorizationStatus.Auth) &&
+                (
+                  <Link
+                    to={generatePath(AppRoute.AddReview, { id: `${film.id}` })}
+                    className="btn film-card__button"
+                  >
+                  Add review
+                  </Link>
+                )}
               </div>
             </div>
           </div>
@@ -69,14 +96,14 @@ function Film({ cards }: CardFilmProps): JSX.Element {
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
               <img
-                src={card.posterImage}
-                alt={card.name}
+                src={film.posterImage}
+                alt={film.name}
                 width="218"
                 height="327"
               />
             </div>
 
-            <CardTabs card={card} />
+            <CardTabs card={film} />
           </div>
         </div>
       </section>
@@ -85,7 +112,7 @@ function Film({ cards }: CardFilmProps): JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
 
-          <FilmList films={cards} />
+          <FilmList films={similarFilms} />
         </section>
 
         <Footer />
