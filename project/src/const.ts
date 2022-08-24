@@ -27,6 +27,12 @@ export enum APIRoute {
     Comments ='/comments',
 }
 
+export enum SliceName {
+  Auth = 'AUTH',
+  Promo = 'PROMO',
+  Films = 'FILMS',
+}
+
 export const TimeMin = (mins: number): string => {
   const hour = Math.trunc(mins / 60);
   const minute = mins % 60;

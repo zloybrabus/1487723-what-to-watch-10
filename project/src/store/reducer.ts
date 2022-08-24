@@ -13,7 +13,7 @@ type InitialState = {
   isCommentLoading: boolean,
   film: CardFilm | null,
   similarFilms: CardFilms,
-  currentFilmComments: Comments
+  currentFilmComments: Comments,
   error: string | null | unknown,
   authorizationStatus: AuthorizationStatus,
 }
