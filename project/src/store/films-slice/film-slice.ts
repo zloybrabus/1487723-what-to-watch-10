@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { SliceName } from "../../const";
 import { CardFilm, CardFilms } from "../../types/card-film";
 import { Comments, CommentAdd } from "../../types/review";
-import { changeGenreAction, incrementCounter, resetCounter, loadFilms, loadFilm, setDataLoadedStatus, requireAuth, setError, getCommentsFilm, fetchSimilarFilms }  from "../api-action";
+import { changeGenreAction, incrementCounter, resetCounter, loadFilms, loadFilm }  from "../action";
 
 type FilmsSliceState = {
   genre: string,
@@ -12,7 +12,6 @@ type FilmsSliceState = {
   similarFilms: CardFilms,
   currentFilmComments: Comments,
   isDataLoading: boolean,
-  newReview: CommentAdd | null,
 };
 
 const initialState: FilmsSliceState = {
@@ -23,7 +22,6 @@ const initialState: FilmsSliceState = {
   similarFilms: [],
   currentFilmComments: [],
   isDataLoading: false,
-  newReview: null,
 };
 
 export const filmsSlice = createSlice({

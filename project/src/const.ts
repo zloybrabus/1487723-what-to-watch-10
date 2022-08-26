@@ -31,6 +31,7 @@ export enum SliceName {
   Auth = 'AUTH',
   Promo = 'PROMO',
   Films = 'FILMS',
+  Comment = 'COMMENT',
 }
 
 export const TimeMin = (mins: number): string => {

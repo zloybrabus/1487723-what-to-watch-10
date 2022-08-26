@@ -16,11 +16,7 @@ const initialState: AuthSliceTypes = {
 export const authSlice = createSlice({
   name: SliceName.Auth,
   initialState,
-  reducers: {
-    clearLoginError: (state) => {
-      state.error = '';
-    },
-  },
+  reducers: {},
   extraReducers(builder) {
     builder
       .addCase(checkAuthAction.rejected, (state) => {
@@ -38,4 +34,4 @@ export const authSlice = createSlice({
 });
 
 
-export const { clearLoginError } = authSlice.actions;
+export const { } = authSlice.actions;
