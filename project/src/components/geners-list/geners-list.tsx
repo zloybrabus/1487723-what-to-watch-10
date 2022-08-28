@@ -4,6 +4,7 @@ import cn from 'classnames';
 import { changeGenreAction, resetCounter } from '../../store/films-slice/film-slice';
 import { selectActiveGenre } from '../../store/films-slice/selectors';
 import { CardFilm } from '../../types/card-film';
+import { ALL_GENRES } from '../../const';
 
 
 type GenresListProps = {
@@ -14,7 +15,7 @@ function GenersList({films}: GenresListProps) {
   const dispatch = useAppDisptach();
   const activeGenre = useAppSelector(selectActiveGenre);
 
-  const genres = ['All geners', ...new Set(films.map((item) => item.genre))];
+  const genres = [ALL_GENRES, ...new Set(films.map((item) => item.genre))];
 
   const handleClick = (genre: string) => {
     dispatch(changeGenreAction(genre));

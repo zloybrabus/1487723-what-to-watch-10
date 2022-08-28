@@ -14,3 +14,7 @@ export const selectcountRenderFilms = (state: State) => state[SliceName.Films].c
 export const selectSimilarFilms = (state: State) => state[SliceName.Films].similarFilms;
 
 export const selectPromoFilms = (state: State) => state[SliceName.Films].promoFilm;
+
+export const selectFavorites = (state: State) => state[SliceName.Films].favorites;
+
+export const selectIsLoadedFavorites = (state: State) => state[SliceName.Films].isDataLoading;

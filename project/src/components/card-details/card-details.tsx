@@ -1,5 +1,10 @@
 import { CardFilm as CardFilmType } from '../../types/card-film';
-import { TimeMin } from '../../const';
+
+export const formatFilmDuration = (mins: number): string => {
+  const hour = Math.trunc(mins / 60);
+  const minute = mins % 60;
+  return `${hour}h ${minute}m`;
+};
 
 type CardFilmProps = {
     card: CardFilmType;
@@ -14,7 +19,7 @@ function CardDetails({ card }: CardFilmProps): JSX.Element {
           <span className="film-card__details-value">{card.director}</span>
         </p>
         <p className="film-card__details-item">
-          <strong className="film-card__details-name">Starringqsd</strong>
+          <strong className="film-card__details-name">Starring</strong>
           {card.starring.map((item,i)=>(<span className="film-card__details-value" key={item}>{`${item}${i === card.starring.length - 1 ? '' : ',' }`}</span>))}
         </p>
       </div>
@@ -22,7 +27,7 @@ function CardDetails({ card }: CardFilmProps): JSX.Element {
       <div className="film-card__text-col">
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Run Time</strong>
-          <span className="film-card__details-value">{TimeMin(card.runTime)}</span>
+          <span className="film-card__details-value">{formatFilmDuration(card.runTime)}</span>
         </p>
         <p className="film-card__details-item">
           <strong className="film-card__details-name">Genre</strong>

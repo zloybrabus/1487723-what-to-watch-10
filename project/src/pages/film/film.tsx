@@ -74,8 +74,7 @@ function Film(): JSX.Element {
                   </svg>
                   <span>My list</span>
                   {
-                    <span className="film-card__count">
-                    </span>
+                    <span className="film-card__count">9</span>
                   }
                 </button>
 

@@ -1,26 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SliceName } from '../../const';
 import { CardFilm, CardFilms } from '../../types/card-film';
-import {fetchFilmsDataAction, fetchFilm, fetchPromoAction} from '../api-action';
+import {fetchFilmsDataAction, fetchFilm, fetchPromoAction, fetchFavoritesAction } from '../api-action';
+import { ALL_GENRES } from '../../const';
 
 type FilmsSliceState = {
   genre: string,
+  IsFavorites: CardFilms,
   films: CardFilms,
   promoFilm: CardFilm | null,
   countRenderFilms: number,
   film: CardFilm | null,
   similarFilms: CardFilms,
+  error: null,
   isDataLoading: boolean,
+  favorites: CardFilms,
 };
 
 const initialState: FilmsSliceState = {
-  genre: 'All genres',
+  genre: ALL_GENRES,
   films: [],
+  IsFavorites: [],
   film: null,
   promoFilm: null,
+  error: null,
   countRenderFilms: 8,
   similarFilms: [],
   isDataLoading: false,
+  favorites: [],
 };
 
 export const filmsSlice = createSlice({
@@ -59,6 +66,16 @@ export const filmsSlice = createSlice({
       .addCase(fetchPromoAction.fulfilled, (state, action) => {
         state.promoFilm = action.payload;
         state.isDataLoading = false;
+      })
+      .addCase(fetchFavoritesAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
+        state.favorites = action.payload;
+        state.isDataLoading = false;
+      })
+      .addCase(fetchFavoritesAction.rejected, (state) => {
+        state.isDataLoading = true;
       });
   },
 });
