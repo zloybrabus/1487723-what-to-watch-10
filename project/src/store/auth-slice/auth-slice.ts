@@ -4,13 +4,13 @@ import { AuthorizationStatus } from '../../const';
 import { checkAuthAction, loginAction, logoutAction } from '../api-action';
 
 type AuthSliceTypes = {
-    authorizationStatus: AuthorizationStatus,
-    error: string | null | unknown,
+  authorizationStatus: AuthorizationStatus,
+  error: string | null | unknown,
 }
 
 const initialState: AuthSliceTypes = {
-    authorizationStatus: AuthorizationStatus.Unknown,
-    error: null,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: null,
 };
 
 export const authSlice = createSlice({
@@ -22,6 +22,9 @@ export const authSlice = createSlice({
       .addCase(checkAuthAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
+      .addCase(checkAuthAction.fulfilled, (state) => {
+        state.authorizationStatus = AuthorizationStatus.Auth;
+      })
       .addCase(loginAction.rejected, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.error = 'error';
@@ -32,6 +35,3 @@ export const authSlice = createSlice({
       });
   },
 });
-
-
-export const { } = authSlice.actions;

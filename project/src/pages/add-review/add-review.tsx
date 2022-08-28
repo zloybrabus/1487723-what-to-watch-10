@@ -6,12 +6,13 @@ import { AppRoute } from '../../const';
 import { fetchFilm } from '../../store/api-action';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { useAppSelector, useAppDisptach } from '../../hooks';
+import { selectFilm, selectIsLoadingFilms } from '../../store/films-slice/selectors';
 
 function AddReview(): JSX.Element {
   const { id } = useParams();
   const dispatch = useAppDisptach();
-  const { isFilmLoading } = useAppSelector((state) => state);
-  const { film } = useAppSelector((state) => state);
+  const isFilmLoading = useAppSelector(selectIsLoadingFilms);
+  const film = useAppSelector(selectFilm);
 
   useEffect(() => {
     if (!id || film) {

@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 import { useAppSelector } from '../../hooks';
 import Review from '../review/review';
-
-const MAX_REVIEWS = 3;
+import { selectComents } from '../../store/comment-slice/selectors';
 
 function CardReviews(): JSX.Element {
-  const { currentFilmComments } = useAppSelector((state) => state);
+  const currentFilmComments = useAppSelector(selectComents);
 
   const commentsToRender = useMemo(
     () =>

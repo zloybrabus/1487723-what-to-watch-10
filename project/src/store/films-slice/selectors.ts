@@ -7,6 +7,8 @@ export const selectFilm = (state: State) => state[SliceName.Films].film;
 
 export const selectIsLoadingFilms = (state: State) => state[SliceName.Films].isDataLoading;
 
-export const selectActiveGenre = (state: State) => state[SliceName.Films].selectedGenre;
+export const selectActiveGenre = (state: State) => state[SliceName.Films].genre;
+
+export const selectcountRenderFilms = (state: State) => state[SliceName.Films].countRenderFilms;
 
 export const selectSimilarFilms = (state: State) => state[SliceName.Films].similarFilms;

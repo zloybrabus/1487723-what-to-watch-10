@@ -3,4 +3,3 @@ export type IsFavorite = {
     status: number,
     isPromo?: boolean,
   };
-  

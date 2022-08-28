@@ -1,10 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { SliceName } from "../../const";
-import { Comments } from "../../types/review";
-import {
-    getCommentsFilm,
-    setCommentsFilm,
-} from "../action";
+import { createSlice } from '@reduxjs/toolkit';
+import { SliceName } from '../../const';
+import { Comments } from '../../types/review';
+import { fetchCommentsFilm, addCommentFilm } from '../api-action';
 
 type FilmsSliceState = {
   currentFilmComments: Comments;
@@ -22,13 +19,19 @@ export const commentSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-    .addCase(getCommentsFilm, (state, action) => {
-      state.currentFilmComments = action.payload;
-    })
-    .addCase(setCommentsFilm, (state, action) => {
-      state.isCommentLoading = action.payload;
-    });
+      .addCase(fetchCommentsFilm.pending, (state) => {
+        state.isCommentLoading = true;
+      })
+      .addCase(fetchCommentsFilm.fulfilled, (state, action) => {
+        state.currentFilmComments = action.payload;
+        state.isCommentLoading = false;
+      })
+      .addCase(addCommentFilm.pending, (state) => {
+        state.isCommentLoading = true;
+      })
+      .addCase(addCommentFilm.fulfilled, (state, action) => {
+        state.currentFilmComments = action.payload;
+        state.isCommentLoading = false;
+      });
   },
 });
-
-export const { } = commentSlice.actions;

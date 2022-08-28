@@ -8,15 +8,16 @@ import FilmList from '../../components/film-list/film-list';
 import { useAppSelector, useAppDisptach } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { fetchFilm, fetchCommentsFilm, fetchSimilar } from '../../store/api-action';
+import { selectFilm, selectIsLoadingFilms, selectSimilarFilms } from '../../store/films-slice/selectors';
+import { selectAuthorizationStatus } from '../../store/auth-slice/selectors';
 
 function Film(): JSX.Element {
   const dispatch = useAppDisptach();
   const { id } = useParams();
-  const {authorizationStatus} = useAppSelector((state) => state);
-  const { isFilmLoading } = useAppSelector((state) => state);
-  const { isCommentLoading } = useAppSelector((state) => state);
-  const { film } = useAppSelector((state) => state);
-  const { similarFilms } = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
+  const isFilmLoading = useAppSelector(selectIsLoadingFilms);
+  const film = useAppSelector(selectFilm);
+  const similarFilms = useAppSelector(selectSimilarFilms);
 
   useEffect(() => {
     if (!id) {
@@ -29,7 +30,7 @@ function Film(): JSX.Element {
   },[dispatch, id]);
 
 
-  if (isFilmLoading || !film || isCommentLoading) {
+  if (isFilmLoading || !film) {
     return <LoadingScreen />;
   }
   return (

@@ -1,26 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { SliceName } from "../../const";
-import { CardFilm, CardFilms } from "../../types/card-film";
-import { Comments, CommentAdd } from "../../types/review";
-import { changeGenreAction, incrementCounter, resetCounter, loadFilms, loadFilm }  from "../action";
+import { createSlice } from '@reduxjs/toolkit';
+import { SliceName } from '../../const';
+import { CardFilm, CardFilms } from '../../types/card-film';
+import {fetchFilmsDataAction, fetchFilm, PromoActionFilm} from '../api-action';
 
 type FilmsSliceState = {
   genre: string,
   films: CardFilms,
+  promoFilm: CardFilm | null,
   countRenderFilms: number,
   film: CardFilm | null,
   similarFilms: CardFilms,
-  currentFilmComments: Comments,
   isDataLoading: boolean,
 };
 
 const initialState: FilmsSliceState = {
-  genre: "All genres",
+  genre: 'All genres',
   films: [],
   film: null,
+  promoFilm: null,
   countRenderFilms: 8,
   similarFilms: [],
-  currentFilmComments: [],
   isDataLoading: false,
 };
 
@@ -28,34 +27,44 @@ export const filmsSlice = createSlice({
   name: SliceName.Films,
   initialState,
   reducers: {
-    clearSelectedGenre: (state) => {
-      state.genre = "All genres";
+    incrementCounter: (state, action) => {
+      state.countRenderFilms = state.countRenderFilms + action.payload;
     },
-    setSelectedGenre: (state, action) => {
+    resetCounter: (state) => {
+      state.countRenderFilms = initialState.countRenderFilms;
+    },
+    changeGenreAction: (state, action) => {
       state.genre = action.payload;
     },
   },
   extraReducers(builder) {
     builder
-    .addCase(loadFilms, (state, action) => {
+      .addCase(fetchFilmsDataAction.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(fetchFilmsDataAction.fulfilled, (state, action) => {
         state.films = action.payload;
+        state.isDataLoading = false;
       })
-      .addCase(loadFilm, (state, action) => {
+      .addCase(fetchFilm.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(fetchFilm.fulfilled, (state, action) => {
         state.film = action.payload;
+        state.isDataLoading = false;
       })
-      .addCase(changeGenreAction, (state, action) => {
-        state.genre = action.payload;
+      .addCase(PromoActionFilm.pending, (state) => {
+        state.isDataLoading = true;
       })
-      .addCase(incrementCounter, (state, action) => {
-        state.countRenderFilms = state.countRenderFilms + action.payload;
-      })
-      .addCase(resetCounter, (state) => {
-        state.countRenderFilms = initialState.countRenderFilms;
-      })
+      .addCase(PromoActionFilm.fulfilled, (state, action) => {
+        state.promoFilm = action.payload;
+        state.isDataLoading = false;
+      });
   },
 });
 
 export const {
-  clearSelectedGenre,
-  setSelectedGenre,
+  incrementCounter,
+  resetCounter,
+  changeGenreAction,
 } = filmsSlice.actions;

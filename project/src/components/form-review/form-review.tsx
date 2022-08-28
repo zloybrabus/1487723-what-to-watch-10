@@ -35,7 +35,7 @@ function FormReview({ id }: FormReviewProps):JSX.Element {
     };
     dispatch(addCommentFilm(review));
   };
-console.log(formData.rating)
+
   return (
     <div className="add-review">
       <form onSubmit={postForm} action="#" className="add-review__form">
@@ -67,7 +67,7 @@ console.log(formData.rating)
             onChange={handleChange}
           />
           <div className="add-review__submit">
-            <button className="add-review__btn" disabled={formData.comment.length == 0 || formData.rating === '0'} type="submit">Post</button>
+            <button className="add-review__btn" disabled={formData.comment.length === 0 || formData.rating === '0'} type="submit">Post</button>
           </div>
         </div>
       </form>

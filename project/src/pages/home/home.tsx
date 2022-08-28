@@ -4,6 +4,7 @@ import FilmControls from '../../components/film-controls/film-controls';
 import Catalog from '../../components/catalog/catalog';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../../hooks';
+import { selectIsLoadingFilms } from '../../store/films-slice/selectors';
 
 type HomeProps = {
   img: string;
@@ -14,9 +15,7 @@ type HomeProps = {
 };
 
 function Home({ img, alt, title, genre, year }: HomeProps): JSX.Element {
-
-  // const {films, isDataLoading} = useAppSelector((state) => state);
-  const {isDataLoading} = useAppSelector((state) => state);
+  const isDataLoading = useAppSelector(selectIsLoadingFilms);
   if (isDataLoading) {
     return <LoadingScreen />;
   }
