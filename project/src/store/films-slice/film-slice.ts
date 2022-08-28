@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SliceName } from '../../const';
 import { CardFilm, CardFilms } from '../../types/card-film';
-import {fetchFilmsDataAction, fetchFilm, PromoActionFilm} from '../api-action';
+import {fetchFilmsDataAction, fetchFilm, fetchPromoAction} from '../api-action';
 
 type FilmsSliceState = {
   genre: string,
@@ -53,10 +53,10 @@ export const filmsSlice = createSlice({
         state.film = action.payload;
         state.isDataLoading = false;
       })
-      .addCase(PromoActionFilm.pending, (state) => {
+      .addCase(fetchPromoAction.pending, (state) => {
         state.isDataLoading = true;
       })
-      .addCase(PromoActionFilm.fulfilled, (state, action) => {
+      .addCase(fetchPromoAction.fulfilled, (state, action) => {
         state.promoFilm = action.payload;
         state.isDataLoading = false;
       });

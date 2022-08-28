@@ -4,7 +4,7 @@ import FilmControls from '../../components/film-controls/film-controls';
 import Catalog from '../../components/catalog/catalog';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../../hooks';
-import { selectIsLoadingFilms } from '../../store/films-slice/selectors';
+import { selectIsLoadingFilms, selectPromoFilms } from '../../store/films-slice/selectors';
 
 type HomeProps = {
   img: string;
@@ -15,6 +15,7 @@ type HomeProps = {
 };
 
 function Home({ img, alt, title, genre, year }: HomeProps): JSX.Element {
+  const promoFilm = useAppSelector(selectPromoFilms);
   const isDataLoading = useAppSelector(selectIsLoadingFilms);
   if (isDataLoading) {
     return <LoadingScreen />;
@@ -25,8 +26,8 @@ function Home({ img, alt, title, genre, year }: HomeProps): JSX.Element {
       <section className="film-card">
         <div className="film-card__bg">
           <img
-            src="img/bg-the-grand-budapest-hotel.jpg"
-            alt="The Grand Budapest Hotel"
+            src={promoFilm?.backgroundImage}
+            alt={promoFilm?.name}
           />
         </div>
 
@@ -37,14 +38,14 @@ function Home({ img, alt, title, genre, year }: HomeProps): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src={img} alt={alt} width="218" height="327" />
+              <img src={promoFilm?.posterImage} alt={promoFilm?.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
-              <h2 className="film-card__title">{title}</h2>
+              <h2 className="film-card__title">{promoFilm?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{year}</span>
+                <span className="film-card__genre">{promoFilm?.genre}</span>
+                <span className="film-card__year">{promoFilm?.released}</span>
               </p>
               <FilmControls />
 

@@ -25,14 +25,14 @@ export const fetchFilm = createAsyncThunk<CardFilm, number, {
   state: State,
   extra: AxiosInstance
 }>(
-  'data/fetchFilms',
+  'data/fetchFilm',
   async (filmId, { extra: api}) => {
     const {data} = await api.get<CardFilm>(`/films/${filmId}`);
     return data;
   },
 );
 
-export const PromoActionFilm = createAsyncThunk<CardFilm, undefined, {
+export const fetchPromoAction = createAsyncThunk<CardFilm, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
