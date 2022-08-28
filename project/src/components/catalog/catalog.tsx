@@ -1,8 +1,10 @@
+import React from 'react';
 import GenersList from '../geners-list/geners-list';
 import FilmList from '../film-list/film-list';
 import ShowMoreButton from '../show-more-button/show-more-button';
 import { useAppSelector } from '../../hooks';
 import { CardFilms } from '../../types/card-film';
+import {selectActiveGenre, selectFilms, selectcountRenderFilms} from '../../store/films-slice/selectors';
 
 function filterFilms(films: CardFilms, activeGenre: string) {
   if (activeGenre === 'All genres') {
@@ -13,9 +15,9 @@ function filterFilms(films: CardFilms, activeGenre: string) {
 }
 
 function Catalog() {
-  const activeGenre = useAppSelector((state) => state.genre);
-  const shownFilmsCount = useAppSelector((state) => state.countRenderFilms);
-  const films: CardFilms = useAppSelector((state) => state.films);
+  const activeGenre = useAppSelector(selectActiveGenre);
+  const shownFilmsCount = useAppSelector(selectcountRenderFilms);
+  const films: CardFilms = useAppSelector(selectFilms);
 
   const filtredFilms = filterFilms(films, activeGenre);
   const filmsForRender = filtredFilms.slice(0, shownFilmsCount);
@@ -24,7 +26,7 @@ function Catalog() {
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-      <GenersList />
+      <GenersList films={films} />
 
       <FilmList films={filmsForRender} />
 

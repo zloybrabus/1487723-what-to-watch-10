@@ -1,4 +1,4 @@
-import { incrementCounter } from '../../store/action';
+import { incrementCounter } from '../../store/films-slice/film-slice';
 import { useAppDisptach } from '../../hooks';
 import { COUNT_RENDER_FILMS } from './../../const';
 

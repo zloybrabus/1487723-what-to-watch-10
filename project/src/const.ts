@@ -25,6 +25,14 @@ export enum APIRoute {
     Login = '/login',
     Logout = '/logout',
     Comments ='/comments',
+    Promo = '/promo',
+}
+
+export enum SliceName {
+  Auth = 'AUTH',
+  Promo = 'PROMO',
+  Films = 'FILMS',
+  Comment = 'COMMENT',
 }
 
 export const TimeMin = (mins: number): string => {

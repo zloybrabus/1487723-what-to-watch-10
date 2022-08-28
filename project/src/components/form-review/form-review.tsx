@@ -67,9 +67,8 @@ function FormReview({ id }: FormReviewProps):JSX.Element {
             onChange={handleChange}
           />
           <div className="add-review__submit">
-            <button className="add-review__btn" type="submit">Post</button>
+            <button className="add-review__btn" disabled={formData.comment.length === 0 || formData.rating === '0'} type="submit">Post</button>
           </div>
-
         </div>
       </form>
     </div>

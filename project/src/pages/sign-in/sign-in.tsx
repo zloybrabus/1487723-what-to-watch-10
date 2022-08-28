@@ -6,16 +6,17 @@ import React, { FormEvent, useRef, useEffect, useState } from 'react';
 import { useAppDisptach, useAppSelector } from '../../hooks/index';
 import { loginAction } from '../../store/api-action';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { selectAuthorizationStatus, selectLoginError } from '../../store/auth-slice/selectors';
 
-const EMAIL_REGEX = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
+const EMAIL_REGEX = /[a-zA-Z0-9]+[.]?([a-zA-Z0-9]+)?[@][a-z]{3,9}[.][a-z]{2,5}/g;
 const PASSWORD_REGEX = /(?=.*[0-9])(?=.*[a-z])/g;
 
 function SignIn(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const dispatch = useAppDisptach();
-  const error = useAppSelector((state) => state.error);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const error = useAppSelector(selectLoginError);
+  const authStatus = useAppSelector(selectAuthorizationStatus);
   const navigate = useNavigate();
   const [isValid, setIsValid] = useState(true);
 

@@ -13,9 +13,10 @@ import browserHistory from '../../browser-history';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import HistoryRouter from '../history-router/history-router';
 import PrivateRoute from '../../components/private-route/private-route';
+import { selectAuthorizationStatus } from '../../store/auth-slice/selectors';
 
 function App(): JSX.Element {
-  const { authorizationStatus} = useAppSelector((state) => state);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   if (isCheckedAuth(authorizationStatus)) {
     return <LoadingScreen />;
   }

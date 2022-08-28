@@ -1,11 +1,10 @@
 import React, { useMemo } from 'react';
 import { useAppSelector } from '../../hooks';
 import Review from '../review/review';
-
-const MAX_REVIEWS = 3;
+import { selectComents } from '../../store/comment-slice/selectors';
 
 function CardReviews(): JSX.Element {
-  const { currentFilmComments } = useAppSelector((state) => state);
+  const currentFilmComments = useAppSelector(selectComents);
 
   const commentsToRender = useMemo(
     () =>
@@ -15,13 +14,15 @@ function CardReviews(): JSX.Element {
     [currentFilmComments]
   );
 
+  const middle = Math.ceil(currentFilmComments.length / 2);
+
   return (
     <div className="film-card__reviews film-card__row">
       {currentFilmComments && currentFilmComments.length ? (
         <>
           <div className="film-card__reviews-col">
             {commentsToRender
-              ?.slice(0, MAX_REVIEWS)
+              .slice(0, middle)
               .map(({ id, user, comment, date, rating }) => (
                 <Review
                   key={id}
@@ -35,7 +36,7 @@ function CardReviews(): JSX.Element {
 
           <div className="film-card__reviews-col">
             {commentsToRender
-              ?.slice(0, MAX_REVIEWS)
+              .slice(middle)
               .map(({ id, user, comment, date, rating }) => (
                 <Review
                   key={id}
@@ -48,7 +49,7 @@ function CardReviews(): JSX.Element {
           </div>
         </>
       ) : (
-        <div>Пока нет коментариев!</div>
+        <div>No comments yet</div>
       )}
     </div>
   );

@@ -2,11 +2,12 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDisptach, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-action';
+import { selectAuthorizationStatus } from '../../store/auth-slice/selectors';
 
 function UserBlock():JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDisptach();
-  const {authorizationStatus} = useAppSelector((state)=>state);
+  const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const logOutHandler = () => {
     dispatch(logoutAction());
   };
