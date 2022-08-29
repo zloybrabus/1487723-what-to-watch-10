@@ -8,7 +8,7 @@ function UserBlock():JSX.Element {
   const navigate = useNavigate();
   const dispatch = useAppDisptach();
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
-  const avatar = useAppSelector(selectAuthorizationAvatar)
+  const avatar = useAppSelector(selectAuthorizationAvatar);
 
   const avatarUrl = authorizationStatus === AuthorizationStatus.Auth ? avatar : '';
 
@@ -23,8 +23,8 @@ function UserBlock():JSX.Element {
           <img
             src={avatarUrl}
             alt=''
-            width="63" 
-            height="63" 
+            width="63"
+            height="63"
           />
         </div>
       </li>

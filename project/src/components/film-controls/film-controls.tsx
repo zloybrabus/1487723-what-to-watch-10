@@ -6,7 +6,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { selectFavorites } from '../../store/films-slice/selectors';
 import { changeToFavoriteAction, fetchFavoritesAction } from '../../store/api-action';
 import { selectFilmId, selectFilmStatus } from '../../store/films-slice/selectors';
-import { IsFavorite } from '../../types/is-favorite'
+import { IsFavorite } from '../../types/is-favorite';
 
 function FilmControls() {
 
@@ -43,11 +43,11 @@ function FilmControls() {
         onClick={handleChangeFavorite}
       >
         <svg viewBox="0 0 19 20" width="19" height="20">
-        {
-          filmStatus
-            ? <use xlinkHref="#in-list" />
-            : <use xlinkHref="#add" />
-        }
+          {
+            filmStatus
+              ? <use xlinkHref="#in-list" />
+              : <use xlinkHref="#add" />
+          }
         </svg>
         <span>My list</span>
         {isAuth && (
