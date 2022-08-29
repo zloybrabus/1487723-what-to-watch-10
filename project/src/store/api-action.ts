@@ -9,6 +9,7 @@ import { Auth } from '../types/auth';
 import { Comments, CommentAdd } from '../types/review';
 import { redirectToRoute } from './action';
 import { toast } from 'react-toastify';
+import { IsFavorite } from '../types/is-favorite';
 
 export const fetchFilmsDataAction = createAsyncThunk<CardFilms, undefined, {
   dispatch: AppDispatch,
@@ -56,7 +57,7 @@ export const fetchFavoritesAction = createAsyncThunk<CardFilms, undefined, {
   }
 );
 
-export const addToFavoriteAction = createAsyncThunk<CardFilm, { id: number, status: number }, {
+export const changeToFavoriteAction = createAsyncThunk<CardFilm, IsFavorite, {
   extra: AxiosInstance
 }>(
   'favorite/addToFavorite',
@@ -102,19 +103,19 @@ export const addCommentFilm = createAsyncThunk<Comments, CommentAdd, {
   },
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, {
+export const checkAuthAction = createAsyncThunk<User, undefined, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance
 }>(
   'user/checkAuth',
   async (_arg, { extra: api}) => {
-    await api.get(APIRoute.Login);
-
+    const { data } = await api.get(APIRoute.Login);
+    return data;
   },
 );
 
-export const loginAction = createAsyncThunk<User | null, Auth, {
+export const loginAction = createAsyncThunk<User, Auth, {
   dispatch: AppDispatch,
   state: State,
   extra: AxiosInstance

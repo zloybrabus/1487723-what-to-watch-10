@@ -6,15 +6,7 @@ import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../../hooks';
 import { selectIsLoadingFilms, selectPromoFilms } from '../../store/films-slice/selectors';
 
-type HomeProps = {
-  img: string;
-  alt: string;
-  title: string;
-  genre: string;
-  year: number;
-};
-
-function Home({ img, alt, title, genre, year }: HomeProps): JSX.Element {
+function Home(): JSX.Element {
   const promoFilm = useAppSelector(selectPromoFilms);
   const isDataLoading = useAppSelector(selectIsLoadingFilms);
   if (isDataLoading) {

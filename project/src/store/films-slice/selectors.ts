@@ -17,4 +17,8 @@ export const selectPromoFilms = (state: State) => state[SliceName.Films].promoFi
 
 export const selectFavorites = (state: State) => state[SliceName.Films].favorites;
 
+export const selectFilmId = (state: State): number | undefined => state[SliceName.Films].film?.id;
+
+export const selectFilmStatus = (state: State): boolean | undefined => state[SliceName.Films].film?.isFavorite;
+
 export const selectIsLoadedFavorites = (state: State) => state[SliceName.Films].isDataLoading;

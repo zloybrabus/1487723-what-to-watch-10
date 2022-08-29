@@ -1,4 +1,4 @@
 export type IsFavorite = {
-  filmId: number,
-  currentStatus: boolean
+  id: number | undefined,
+  status: boolean | undefined,
 };
