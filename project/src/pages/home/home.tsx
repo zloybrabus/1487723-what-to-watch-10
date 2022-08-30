@@ -4,12 +4,14 @@ import FilmControls from '../../components/film-controls/film-controls';
 import Catalog from '../../components/catalog/catalog';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../../hooks';
-import { selectIsLoadingFilms, selectPromoFilms } from '../../store/films-slice/selectors';
+import { selectIsLoadingFilms, selectPromoFilms, selectIsPromoLoading } from '../../store/films-slice/selectors';
 
 function Home(): JSX.Element {
   const promoFilm = useAppSelector(selectPromoFilms);
   const isDataLoading = useAppSelector(selectIsLoadingFilms);
-  if (isDataLoading) {
+  const isPromoLoading = useAppSelector(selectIsPromoLoading);
+
+  if (isDataLoading || isPromoLoading || !promoFilm) {
     return <LoadingScreen />;
   }
 
@@ -39,7 +41,7 @@ function Home(): JSX.Element {
                 <span className="film-card__genre">{promoFilm?.genre}</span>
                 <span className="film-card__year">{promoFilm?.released}</span>
               </p>
-              <FilmControls />
+              <FilmControls film={promoFilm} />
 
             </div>
           </div>

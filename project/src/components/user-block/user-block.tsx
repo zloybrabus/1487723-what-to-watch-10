@@ -19,6 +19,7 @@ function UserBlock():JSX.Element {
   return(
     <ul className="user-block">
       <li className="user-block__item" onClick={() => navigate('/mylist')}>
+        {authorizationStatus === AuthorizationStatus.Auth &&
         <div className="user-block__avatar">
           <img
             src={avatarUrl}
@@ -26,7 +27,7 @@ function UserBlock():JSX.Element {
             width="63"
             height="63"
           />
-        </div>
+        </div>}
       </li>
       <li className="user-block__item">
         {authorizationStatus === AuthorizationStatus.Auth ?

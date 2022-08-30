@@ -1,33 +1,31 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { selectAuthorizationStatus } from '../../store/auth-slice/selectors';
 import { useAppSelector, useAppDisptach } from '../../hooks';
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { selectFavorites } from '../../store/films-slice/selectors';
-import { changeToFavoriteAction, fetchFavoritesAction } from '../../store/api-action';
-import { selectFilmId, selectFilmStatus } from '../../store/films-slice/selectors';
-import { IsFavorite } from '../../types/is-favorite';
+import { changeToFavoriteAction } from '../../store/api-action';
+import { ChangeFavoritePayload } from '../../types/change-favorite-payload';
+import { CardFilm } from '../../types/card-film';
 
-function FilmControls() {
+type FilmControlsProps = {
+  film: CardFilm,
+}
+
+function FilmControls({ film }: FilmControlsProps) {
 
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   const favorieFilms = useAppSelector(selectFavorites);
-  const filmId = useAppSelector(selectFilmId);
-  const filmStatus = useAppSelector(selectFilmStatus);
   const dispatch = useAppDisptach();
 
   const handleChangeFavorite = () => {
-    const data: IsFavorite = {
-      id: filmId,
-      status: filmStatus,
+    const data: ChangeFavoritePayload = {
+      id: film?.id,
+      status: film.isFavorite ? 0 : 1,
     };
     dispatch(changeToFavoriteAction(data));
   };
-
-  useEffect(() => {
-    dispatch(fetchFavoritesAction());
-  }, [filmStatus, dispatch]);
 
   return (
     <div className="film-card__buttons">
@@ -44,7 +42,7 @@ function FilmControls() {
       >
         <svg viewBox="0 0 19 20" width="19" height="20">
           {
-            filmStatus
+            film.isFavorite
               ? <use xlinkHref="#in-list" />
               : <use xlinkHref="#add" />
           }
@@ -55,9 +53,9 @@ function FilmControls() {
         )}
       </button>
 
-      {isAuth && filmId && (
+      {isAuth && film.id && (
         <Link
-          to={generatePath(AppRoute.AddReview, { id: `${filmId}` })}
+          to={generatePath(AppRoute.AddReview, { id: `${film.id}` })}
           className="btn film-card__button"
         >
           Add review

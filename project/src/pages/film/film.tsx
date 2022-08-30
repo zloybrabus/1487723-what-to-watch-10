@@ -54,7 +54,7 @@ function Film(): JSX.Element {
                 <span className="film-card__year">{film.released}</span>
               </p>
 
-              <FilmControls />
+              <FilmControls film={film} />
             </div>
           </div>
         </div>

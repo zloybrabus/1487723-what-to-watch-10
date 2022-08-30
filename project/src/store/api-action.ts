@@ -9,7 +9,7 @@ import { Auth } from '../types/auth';
 import { Comments, CommentAdd } from '../types/review';
 import { redirectToRoute } from './action';
 import { toast } from 'react-toastify';
-import { IsFavorite } from '../types/is-favorite';
+import { ChangeFavoritePayload } from '../types/change-favorite-payload';
 
 export const fetchFilmsDataAction = createAsyncThunk<CardFilms, undefined, {
   dispatch: AppDispatch,
@@ -57,7 +57,7 @@ export const fetchFavoritesAction = createAsyncThunk<CardFilms, undefined, {
   }
 );
 
-export const changeToFavoriteAction = createAsyncThunk<CardFilm, IsFavorite, {
+export const changeToFavoriteAction = createAsyncThunk<CardFilm, ChangeFavoritePayload, {
   extra: AxiosInstance
 }>(
   'favorite/addToFavorite',
