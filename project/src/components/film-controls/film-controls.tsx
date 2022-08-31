@@ -21,8 +21,8 @@ function FilmControls({ film }: FilmControlsProps) {
 
   const handleChangeFavorite = () => {
     const data: ChangeFavoritePayload = {
-      id: film?.id,
-      status: film.isFavorite ? 0 : 1,
+      id: film.id,
+      status: Number(!film.isFavorite),
     };
     dispatch(changeToFavoriteAction(data));
   };

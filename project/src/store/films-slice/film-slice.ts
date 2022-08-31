@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { SliceName } from '../../const';
 import { CardFilm, CardFilms } from '../../types/card-film';
-import {fetchFilmsDataAction, fetchFilm, fetchPromoAction, fetchFavoritesAction, changeToFavoriteAction } from '../api-action';
+import {fetchFilmsDataAction, fetchFilm, fetchPromoAction, fetchFavoritesAction, changeToFavoriteAction, fetchSimilar } from '../api-action';
 import { ALL_GENRES } from '../../const';
 
 type FilmsSliceState = {
@@ -57,6 +57,13 @@ export const filmsSlice = createSlice({
         state.films = action.payload;
         state.isDataLoading = false;
       })
+      .addCase(fetchSimilar.pending, (state) => {
+        state.isDataLoading = true;
+      })
+      .addCase(fetchSimilar.fulfilled, (state, action) => {
+        state.similarFilms = action.payload;
+        state.isDataLoading = false;
+      })
       .addCase(fetchFilm.pending, (state) => {
         state.isFilmLoading = true;
       })
@@ -86,6 +93,12 @@ export const filmsSlice = createSlice({
           state.favorites.push(action.payload);
         } else {
           state.favorites = state.favorites.filter((item) => (item.id !== action.payload.id));
+        }
+        if (action.payload.id === state.promoFilm?.id) {
+          state.promoFilm = action.payload;
+        }
+        if (action.payload.id === state.film?.id) {
+          state.film = action.payload;
         }
       });
   },

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import { useParams } from 'react-router-dom';
-// import { AppRoute, AuthorizationStatus } from '../../const';
 import CardTabs from '../../components/card-tabs/card-tabs';
 import FilmList from '../../components/film-list/film-list';
 import { useAppSelector, useAppDisptach } from '../../hooks';
@@ -27,7 +26,6 @@ function Film(): JSX.Element {
     dispatch(fetchSimilar(id));
     dispatch(fetchCommentsFilm(+id));
   },[dispatch, id]);
-
 
   if (isFilmLoading || !film) {
     return <LoadingScreen />;
