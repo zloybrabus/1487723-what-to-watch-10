@@ -26,6 +26,7 @@ export enum APIRoute {
     Logout = '/logout',
     Comments ='/comments',
     Promo = '/promo',
+    Favorite = '/favorite',
 }
 
 export enum SliceName {
@@ -35,10 +36,6 @@ export enum SliceName {
   Comment = 'COMMENT',
 }
 
-export const TimeMin = (mins: number): string => {
-  const hour = Math.trunc(mins / 60);
-  const minute = mins % 60;
-  return `${hour}h ${minute}m`;
-};
+export const ALL_GENRES = 'All genres';
 
 export const COUNT_RENDER_FILMS = 8;

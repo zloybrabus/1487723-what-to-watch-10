@@ -5,9 +5,10 @@ import ShowMoreButton from '../show-more-button/show-more-button';
 import { useAppSelector } from '../../hooks';
 import { CardFilms } from '../../types/card-film';
 import {selectActiveGenre, selectFilms, selectcountRenderFilms} from '../../store/films-slice/selectors';
+import { ALL_GENRES } from '../../const';
 
 function filterFilms(films: CardFilms, activeGenre: string) {
-  if (activeGenre === 'All genres') {
+  if (activeGenre === ALL_GENRES) {
     return films;
   } else {
     return films.filter((film) => film.genre === activeGenre);

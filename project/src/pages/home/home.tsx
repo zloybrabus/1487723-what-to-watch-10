@@ -1,23 +1,18 @@
+import React from 'react';
 import Header from '../../components/header/header';
 import Footer from '../../components/footer/footer';
 import FilmControls from '../../components/film-controls/film-controls';
 import Catalog from '../../components/catalog/catalog';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import { useAppSelector } from '../../hooks';
-import { selectIsLoadingFilms, selectPromoFilms } from '../../store/films-slice/selectors';
+import { selectIsLoadingFilms, selectPromoFilms, selectIsPromoLoading } from '../../store/films-slice/selectors';
 
-type HomeProps = {
-  img: string;
-  alt: string;
-  title: string;
-  genre: string;
-  year: number;
-};
-
-function Home({ img, alt, title, genre, year }: HomeProps): JSX.Element {
+function Home(): JSX.Element {
   const promoFilm = useAppSelector(selectPromoFilms);
   const isDataLoading = useAppSelector(selectIsLoadingFilms);
-  if (isDataLoading) {
+  const isPromoLoading = useAppSelector(selectIsPromoLoading);
+
+  if (isDataLoading || isPromoLoading || !promoFilm) {
     return <LoadingScreen />;
   }
 
@@ -47,7 +42,7 @@ function Home({ img, alt, title, genre, year }: HomeProps): JSX.Element {
                 <span className="film-card__genre">{promoFilm?.genre}</span>
                 <span className="film-card__year">{promoFilm?.released}</span>
               </p>
-              <FilmControls />
+              <FilmControls film={promoFilm} />
 
             </div>
           </div>

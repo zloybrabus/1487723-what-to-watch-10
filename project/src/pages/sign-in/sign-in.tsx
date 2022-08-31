@@ -70,7 +70,7 @@ function SignIn(): JSX.Element {
             </div>
           ) : null}
           <div
-            className={cn('sign-in__field', {
+            className={cn('sign-in__fields', {
               'sign-in__field sign-in__field--error': error,
             })}
           >
