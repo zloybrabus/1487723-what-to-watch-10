@@ -1,62 +1,80 @@
-import React from 'react';
-import { Navigate, useParams } from 'react-router-dom';
-import { CardFilms } from '../../types/card-film';
+import { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppSelector, useAppDisptach } from '../../hooks';
+import browserHistory from '../../browser-history';
+import { fetchFilm } from '../../store/api-action';
+import { selectIsLoadingFilms, selectFilm } from '../../store/films-slice/selectors';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import PlayerButtons from '../../components/player-buttons/player-buttons';
+import PlayerTimer from '../../components/player-buttons/player-timer';
 
-type CardFilmProps= {
-  cards: CardFilms;
-}
+function Player(): JSX.Element {
 
-function Player({ cards }: CardFilmProps): JSX.Element {
   const { id } = useParams();
-  const card = cards.find((cardInFilm) => id && cardInFilm.id === Number.parseInt(id, 10));
-  if (!card) {
-    return <Navigate to="/" />;
+  const dispatch = useAppDisptach();
+  const isDataLoading = useAppSelector(selectIsLoadingFilms);
+  const film = useAppSelector(selectFilm);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const handleExitButtonClick = () => {
+    browserHistory.back();
+  };
+
+  const handlePlayerButtonsClick = () => {
+    if(isPlaying) {
+      videoRef.current?.pause();
+    } else {
+      videoRef.current?.play();
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleFullscreenClick = () => {
+    videoRef.current?.requestFullscreen();
+  };
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+
+    dispatch(fetchFilm(+id));
+  },[dispatch, id]);
+
+  if(isDataLoading || !film?.id) {
+    return <LoadingScreen />;
   }
+
   return (
     <div className="player">
       <video
-        src="#"
+        ref={videoRef}
+        src={film.videoLink}
         className="player__video"
-        poster={card.posterImage}
+        poster={film.backgroundImage}
       >
       </video>
 
-      <button type="button" className="player__exit">
+      <button
+        onClick={handleExitButtonClick}
+        type="button"
+        className="player__exit"
+      >
         Exit
       </button>
 
       <div className="player__controls">
-        <div className="player__controls-row">
-          <div className="player__time">
-            <progress
-              className="player__progress"
-              value="30"
-              max="100"
-            >
-            </progress>
-            <div className="player__toggler" style={{ left: '30%' }}>
-              Toggler
-            </div>
-          </div>
-          <div className="player__time-value">1:30:29</div>
-        </div>
+        <PlayerTimer
+          isPlaying={isPlaying}
+          filmDuration={film.runTime}
+        />
 
-        <div className="player__controls-row">
-          <button type="button" className="player__play">
-            <svg viewBox="0 0 19 19" width="19" height="19">
-              <use xlinkHref="#play-s"></use>
-            </svg>
-            <span>Play</span>
-          </button>
-          <div className="player__name">Transpotting</div>
-
-          <button type="button" className="player__full-screen">
-            <svg viewBox="0 0 27 27" width="27" height="27">
-              <use xlinkHref="#full-screen"></use>
-            </svg>
-            <span>Full screen</span>
-          </button>
-        </div>
+        <PlayerButtons
+          isPlaying={isPlaying}
+          handlePlayerButtonsClick={handlePlayerButtonsClick}
+          handleFullscreenClick={handleFullscreenClick}
+        />
       </div>
     </div>
   );

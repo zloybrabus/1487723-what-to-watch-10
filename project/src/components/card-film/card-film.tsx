@@ -24,7 +24,7 @@ function CardFilm({ card }: CardFilmProps) {
       <Link className="small-film-card__link" to={generatePath(AppRoute.Film, { id: `${card.id}` })}>
         <div className="small-film-card__image">
           {isActive
-            ? <VideoPlayer img={card.previewImage} video={card.videoLink} />
+            ? <VideoPlayer img={card.previewImage} src={card.videoLink} />
             : <img src={card.previewImage} alt={card.name} width="280" height="175" />}
         </div>
       </Link>

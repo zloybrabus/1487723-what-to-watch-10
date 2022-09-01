@@ -72,7 +72,7 @@ export const fetchSimilar = createAsyncThunk<CardFilms, string, {
   state: State,
   extra: AxiosInstance
 }>(
-  'data/FilmSimilar',
+  'data/fetchFilmSimilar',
   async (filmId, { extra: api}) => {
     const {data} = await api.get<CardFilms>(`/films/${filmId}/similar`);
     return data;
