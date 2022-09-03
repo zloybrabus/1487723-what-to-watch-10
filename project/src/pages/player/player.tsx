@@ -1,79 +1,150 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useAppSelector, useAppDisptach } from '../../hooks';
+import { useAppDisptach, useAppSelector } from '../../hooks';
 import { fetchFilm } from '../../store/api-action';
-import { selectFilmLoading, selectFilm } from '../../store/films-slice/selectors';
-import LoadingScreen from '../../pages/loading-screen/loading-screen';
-import PlayerButtons from '../../components/player-buttons/player-buttons';
-import PlayerTimer from '../../components/player-buttons/player-timer';
+import { selectFilm, selectFilmLoading } from '../../store/films-slice/selectors';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-function Player(): JSX.Element {
-  const navigate = useNavigate();
-  const { id } = useParams();
+const DECIMAL_PLACES = 2;
+const FULL_TIME_IN_PERCENT = 100;
+const SECONDS_IN_HOUR = 3600;
+const SECONDS_IN_MINUTE = 60;
+
+function Player() {
   const dispatch = useAppDisptach();
-  const isFilmLoading = useAppSelector(selectFilmLoading);
-  const film = useAppSelector(selectFilm);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const {id} = useParams();
 
   useEffect(() => {
-    if (!id) {
-      return;
+    if (id) {
+      dispatch(fetchFilm(+id));
     }
+  }, [dispatch, id]);
 
-    dispatch(fetchFilm(+id));
-  },[dispatch, id]);
+  const navigate = useNavigate();
+  const film = useAppSelector(selectFilm);
+  const isFilmLoading = useAppSelector(selectFilmLoading);
 
-  const handleExitButtonClick = () => {
-    navigate(-1);
+  const clickExitHandler = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    navigate(`/films/${id}`);
   };
 
-  const handlePlayerButtonsClick = () => {
-    if(isPlaying) {
-      videoRef.current?.pause();
+  const video = useRef<HTMLVideoElement>(null);
+  const [stateVideo, setStateVideo] = useState({
+    playText: 'Pause',
+    useLink: '#pause',
+    viewBox: '0 0 14 21',
+    widthButton: '14',
+    heightButton: '21',
+    timeValue: video.current?.currentTime ? Math.floor(video.current.currentTime) : 0,
+  });
+
+  useEffect(() => {
+    setStateVideo({
+      ...stateVideo,
+      timeValue: video.current?.currentTime ? Math.floor(video.current.currentTime) : 0
+    });
+  }, []);
+
+  function getDurationVideo (duration: number | undefined, currentTime: number | undefined) {
+    if (duration && currentTime) {
+      const time = Math.floor(duration - currentTime);
+      return `${Math.floor(time / SECONDS_IN_HOUR)}:${Math.floor(time % SECONDS_IN_HOUR / SECONDS_IN_MINUTE)}:${time % SECONDS_IN_MINUTE}`;
+    }
+  }
+
+  const [currentWatchedPercent, setCurrentWatchedPercent] = useState(0);
+  function updateTime () {
+    if (video.current?.currentTime || video.current?.duration) {
+      const percent = FULL_TIME_IN_PERCENT * Number((video.current.currentTime).toFixed(DECIMAL_PLACES)) / Number((video.current.duration).toFixed(DECIMAL_PLACES));
+      setCurrentWatchedPercent(Math.round(percent));
+    }
+  }
+  useEffect(() => {
+
+    if (video.current) {
+      video.current.addEventListener('timeupdate', updateTime);
+      return () => video.current?.removeEventListener('timeupdate', updateTime);
+    }
+  },[video.current]);
+
+  const clickPlayPauseHandler = () => {
+    if (video.current?.paused) {
+      setStateVideo({
+        ...stateVideo,
+        playText: 'Pause',
+        useLink: '#pause',
+        viewBox: '0 0 14 21',
+        widthButton: '14',
+        heightButton: '21',
+      });
+      video.current?.play();
+
     } else {
-      videoRef.current?.play();
+      setStateVideo({
+        ...stateVideo,
+        playText: 'Play',
+        useLink: '#play-s',
+        viewBox: '0 0 19 19',
+        widthButton: '19',
+        heightButton: '19',
+      });
+      video.current?.pause();
+
     }
-    setIsPlaying(!isPlaying);
+
   };
 
-  const handleFullscreenClick = () => {
-    videoRef.current?.requestFullscreen();
+  const ckickFullScreenHandler = () => {
+    const player = document.querySelector('.player');
+    if (!document.fullscreenElement && player) {
+      player.requestFullscreen();
+    } else {
+      document.exitFullscreen();
+    }
   };
 
-  if(isFilmLoading || !film) {
+  if (isFilmLoading || !film) {
     return <LoadingScreen />;
   }
 
   return (
     <div className="player">
-      <video
-        ref={videoRef}
-        src={film.videoLink}
-        className="player__video"
-        poster={film.backgroundImage}
-      >
+      <video src={film?.videoLink} ref={video} autoPlay className="player__video" poster={film?.backgroundImage}>
+
       </video>
 
-      <button
-        onClick={handleExitButtonClick}
-        type="button"
-        className="player__exit"
-      >
-        Exit
-      </button>
+      <button onClick={clickExitHandler} type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
-        <PlayerTimer
-          isPlaying={isPlaying}
-          filmDuration={film.runTime}
-        />
+        <div className="player__controls-row">
+          <div className="player__time">
+            <progress className="player__progress" value={`${(Number(video.current?.currentTime.toFixed(DECIMAL_PLACES)))}`} max={`${(video.current?.duration ? video.current?.duration : 0)}`}></progress>
+            <div className="player__toggler" style={{
+              left: `${currentWatchedPercent}%`,
+            }}
+            >Toggler
+            </div>
+          </div>
+          <div className="player__time-value">{getDurationVideo(video.current?.duration, video.current?.currentTime)}</div>
+        </div>
 
-        <PlayerButtons
-          isPlaying={isPlaying}
-          handlePlayerButtonsClick={handlePlayerButtonsClick}
-          handleFullscreenClick={handleFullscreenClick}
-        />
+        <div className="player__controls-row">
+          <button onClick={clickPlayPauseHandler} type="button" className="player__play">
+            <svg viewBox={stateVideo.viewBox} width={stateVideo.widthButton} height={stateVideo.heightButton}>
+              <use xlinkHref={stateVideo.useLink}></use>
+            </svg>
+            <span>{stateVideo.playText}</span>
+          </button>
+          <div className="player__name">{film?.name}</div>
+
+          <button onClick={ckickFullScreenHandler} type="button" className="player__full-screen">
+            <svg viewBox="0 0 27 27" width="27" height="27">
+              <use xlinkHref="#full-screen"></use>
+            </svg>
+            <span>Full screen</span>
+          </button>
+        </div>
       </div>
     </div>
   );

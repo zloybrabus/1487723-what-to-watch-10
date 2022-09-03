@@ -11,6 +11,7 @@ function VideoPlayer({ src, img }: VideoPlayerProps): JSX.Element {
       width="280"
       height="175"
       muted
+      loop
     />
   );
 }
