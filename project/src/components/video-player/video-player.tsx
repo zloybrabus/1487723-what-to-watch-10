@@ -1,12 +1,12 @@
 type VideoPlayerProps = {
   src: string,
-  img: string,
+  img?: string,
 }
 
-function VideoPlayer({ src }: VideoPlayerProps): JSX.Element {
+function VideoPlayer({ src, img }: VideoPlayerProps): JSX.Element {
   return (
     <video
-      src={src}
+      src={src || img}
       autoPlay
       width="280"
       height="175"

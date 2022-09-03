@@ -7,18 +7,18 @@ import FilmList from '../../components/film-list/film-list';
 import { useAppSelector, useAppDisptach } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { fetchFilm, fetchCommentsFilm, fetchSimilar } from '../../store/api-action';
-import { selectFilm, selectIsLoadingFilms, selectSimilarFilms } from '../../store/films-slice/selectors';
+import { selectFilm, selectFilmLoading, selectSimilarFilms } from '../../store/films-slice/selectors';
 import FilmControls from '../../components/film-controls/film-controls';
 
 function Film(): JSX.Element {
   const dispatch = useAppDisptach();
   const { id } = useParams();
-  const isFilmLoading = useAppSelector(selectIsLoadingFilms);
+  const isFilmLoading = useAppSelector(selectFilmLoading);
   const film = useAppSelector(selectFilm);
   const similarFilms = useAppSelector(selectSimilarFilms);
 
   useEffect(() => {
-    if (!id) {
+    if (!id || film?.id === +id) {
       return;
     }
 

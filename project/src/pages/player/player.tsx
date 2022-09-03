@@ -1,24 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAppSelector, useAppDisptach } from '../../hooks';
-import browserHistory from '../../browser-history';
 import { fetchFilm } from '../../store/api-action';
-import { selectIsLoadingFilms, selectFilm } from '../../store/films-slice/selectors';
+import { selectFilmLoading, selectFilm } from '../../store/films-slice/selectors';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
 import PlayerButtons from '../../components/player-buttons/player-buttons';
 import PlayerTimer from '../../components/player-buttons/player-timer';
 
 function Player(): JSX.Element {
-
+  const navigate = useNavigate();
   const { id } = useParams();
   const dispatch = useAppDisptach();
-  const isDataLoading = useAppSelector(selectIsLoadingFilms);
+  const isFilmLoading = useAppSelector(selectFilmLoading);
   const film = useAppSelector(selectFilm);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+
+    dispatch(fetchFilm(+id));
+  },[dispatch, id]);
+
   const handleExitButtonClick = () => {
-    browserHistory.back();
+    navigate(-1);
   };
 
   const handlePlayerButtonsClick = () => {
@@ -34,15 +41,7 @@ function Player(): JSX.Element {
     videoRef.current?.requestFullscreen();
   };
 
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-
-    dispatch(fetchFilm(+id));
-  },[dispatch, id]);
-
-  if(isDataLoading || !film?.id) {
+  if(isFilmLoading || !film) {
     return <LoadingScreen />;
   }
 

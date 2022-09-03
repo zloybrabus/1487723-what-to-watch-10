@@ -1,20 +1,19 @@
 import React from 'react';
 import { selectAuthorizationStatus } from '../../store/auth-slice/selectors';
 import { useAppSelector, useAppDisptach } from '../../hooks';
-import { Link, generatePath } from 'react-router-dom';
+import { Link, generatePath, useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { selectFavorites } from '../../store/films-slice/selectors';
 import { changeToFavoriteAction } from '../../store/api-action';
 import { ChangeFavoritePayload } from '../../types/change-favorite-payload';
 import { CardFilm } from '../../types/card-film';
-import { redirectToRoute } from '../../store/action';
 
 type FilmControlsProps = {
   film: CardFilm,
 }
 
 function FilmControls({ film }: FilmControlsProps) {
-
+  const navigate = useNavigate();
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
   const favorieFilms = useAppSelector(selectFavorites);
@@ -29,7 +28,7 @@ function FilmControls({ film }: FilmControlsProps) {
   };
 
   const handlePlayButtonClick = () => {
-    dispatch(redirectToRoute(`player/${film.id}`));
+    navigate(`/player/${film.id}`);
   };
 
   return (
