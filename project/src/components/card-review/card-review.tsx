@@ -5,13 +5,14 @@ import { selectComents } from '../../store/comment-slice/selectors';
 
 function CardReviews(): JSX.Element {
   const currentFilmComments = useAppSelector(selectComents);
+  const newCurrentFilmComments = currentFilmComments.slice();
 
   const commentsToRender = useMemo(
     () =>
-      currentFilmComments?.sort(
+      newCurrentFilmComments?.sort(
         (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
       ),
-    [currentFilmComments]
+    [newCurrentFilmComments]
   );
 
   const middle = Math.ceil(currentFilmComments.length / 2);

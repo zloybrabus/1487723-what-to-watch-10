@@ -1,14 +1,3 @@
-type AddReviewObj = {
-  comment: string
-  date: string
-  id: number
-  rating: number
-  user: {
-  id: number
-  name: string
-  }
-}
-
 type CommentData = {
   comment: string,
   date: string,
@@ -34,4 +23,4 @@ type AnswerSendCommentError = {
 
 type AnswerSendComments = Comments | AnswerSendCommentError
 
-export type {AddReviewObj, CommentData, Comments, CommentAdd, AnswerSendComments};
+export type { CommentData, Comments, CommentAdd, AnswerSendComments};

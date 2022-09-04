@@ -47,7 +47,13 @@ function FilmControls({ film, main }: FilmControlsProps) {
       <button
         className="btn btn--list film-card__button"
         type="button"
-        onClick={handleChangeFavorite}
+        onClick={() => {
+          if (isAuth) {
+            handleChangeFavorite();
+          } else {
+            navigate('/login');
+          }
+        }}
       >
         <svg viewBox="0 0 19 20" width="19" height="20">
           {
