@@ -16,6 +16,7 @@ function Film(): JSX.Element {
   const isFilmLoading = useAppSelector(selectFilmLoading);
   const film = useAppSelector(selectFilm);
   const similarFilms = useAppSelector(selectSimilarFilms);
+  const isMain = false;
 
   useEffect(() => {
     if (!id || film?.id === +id) {
@@ -52,7 +53,7 @@ function Film(): JSX.Element {
                 <span className="film-card__year">{film.released}</span>
               </p>
 
-              <FilmControls film={film} />
+              <FilmControls main={isMain} film={film} />
             </div>
           </div>
         </div>

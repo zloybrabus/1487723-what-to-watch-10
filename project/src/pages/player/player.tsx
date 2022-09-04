@@ -13,22 +13,9 @@ const SECONDS_IN_MINUTE = 60;
 function Player() {
   const dispatch = useAppDisptach();
   const {id} = useParams();
-
-  useEffect(() => {
-    if (id) {
-      dispatch(fetchFilm(+id));
-    }
-  }, [dispatch, id]);
-
   const navigate = useNavigate();
   const film = useAppSelector(selectFilm);
   const isFilmLoading = useAppSelector(selectFilmLoading);
-
-  const clickExitHandler = (evt: React.MouseEvent) => {
-    evt.preventDefault();
-    navigate(`/films/${id}`);
-  };
-
   const video = useRef<HTMLVideoElement>(null);
   const [stateVideo, setStateVideo] = useState({
     playText: 'Pause',
@@ -38,28 +25,8 @@ function Player() {
     heightButton: '21',
     timeValue: video.current?.currentTime ? Math.floor(video.current.currentTime) : 0,
   });
-
-  useEffect(() => {
-    setStateVideo({
-      ...stateVideo,
-      timeValue: video.current?.currentTime ? Math.floor(video.current.currentTime) : 0
-    });
-  }, []);
-
-  function getDurationVideo (duration: number | undefined, currentTime: number | undefined) {
-    if (duration && currentTime) {
-      const time = Math.floor(duration - currentTime);
-      return `${Math.floor(time / SECONDS_IN_HOUR)}:${Math.floor(time % SECONDS_IN_HOUR / SECONDS_IN_MINUTE)}:${time % SECONDS_IN_MINUTE}`;
-    }
-  }
-
   const [currentWatchedPercent, setCurrentWatchedPercent] = useState(0);
-  function updateTime () {
-    if (video.current?.currentTime || video.current?.duration) {
-      const percent = FULL_TIME_IN_PERCENT * Number((video.current.currentTime).toFixed(DECIMAL_PLACES)) / Number((video.current.duration).toFixed(DECIMAL_PLACES));
-      setCurrentWatchedPercent(Math.round(percent));
-    }
-  }
+
   useEffect(() => {
 
     if (video.current) {
@@ -68,7 +35,46 @@ function Player() {
     }
   },[video.current]);
 
-  const clickPlayPauseHandler = () => {
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchFilm(+id));
+    }
+  }, [dispatch, id]);
+
+  useEffect(() => {
+    setStateVideo({
+      ...stateVideo,
+      timeValue: video.current?.currentTime ? Math.floor(video.current.currentTime) : 0
+    });
+  }, []);
+
+  const handleClickExit = (evt: React.MouseEvent) => {
+    evt.preventDefault();
+    navigate(`/films/${id}`);
+  };
+
+  function getDurationVideo (duration: number | undefined, currentTime: number | undefined) {
+    if (duration && currentTime) {
+      const time = Math.floor(duration - currentTime);
+      const hours = Math.floor(time / SECONDS_IN_HOUR);
+      const minute = Math.floor(time % SECONDS_IN_HOUR / SECONDS_IN_MINUTE);
+      const seconds = time % SECONDS_IN_MINUTE;
+      const formattedSeconds = seconds.toString().padStart(2, '0');
+      const formattedMinute = minute.toString().padStart(2, '0');
+      const formattedHours = hours.toString().padStart(2, '0');
+
+      return `-${hours !== 0 ? `${formattedHours}:` : ''}${formattedMinute}:${formattedSeconds}`;
+    }
+  }
+
+  function updateTime () {
+    if (video.current?.currentTime || video.current?.duration) {
+      const percent = FULL_TIME_IN_PERCENT * Number((video.current.currentTime).toFixed(DECIMAL_PLACES)) / Number((video.current.duration).toFixed(DECIMAL_PLACES));
+      setCurrentWatchedPercent(Math.round(percent));
+    }
+  }
+
+  const handleClickPlayPause = () => {
     if (video.current?.paused) {
       setStateVideo({
         ...stateVideo,
@@ -95,10 +101,9 @@ function Player() {
 
   };
 
-  const ckickFullScreenHandler = () => {
-    const player = document.querySelector('.player');
-    if (!document.fullscreenElement && player) {
-      player.requestFullscreen();
+  const handleCkickFullScreen = () => {
+    if (!document.fullscreenElement && video.current) {
+      video.current?.requestFullscreen();
     } else {
       document.exitFullscreen();
     }
@@ -114,7 +119,7 @@ function Player() {
 
       </video>
 
-      <button onClick={clickExitHandler} type="button" className="player__exit">Exit</button>
+      <button onClick={handleClickExit} type="button" className="player__exit">Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -130,7 +135,7 @@ function Player() {
         </div>
 
         <div className="player__controls-row">
-          <button onClick={clickPlayPauseHandler} type="button" className="player__play">
+          <button onClick={handleClickPlayPause} type="button" className="player__play">
             <svg viewBox={stateVideo.viewBox} width={stateVideo.widthButton} height={stateVideo.heightButton}>
               <use xlinkHref={stateVideo.useLink}></use>
             </svg>
@@ -138,7 +143,7 @@ function Player() {
           </button>
           <div className="player__name">{film?.name}</div>
 
-          <button onClick={ckickFullScreenHandler} type="button" className="player__full-screen">
+          <button onClick={handleCkickFullScreen} type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>

@@ -10,9 +10,10 @@ import { CardFilm } from '../../types/card-film';
 
 type FilmControlsProps = {
   film: CardFilm,
+  main: boolean,
 }
 
-function FilmControls({ film }: FilmControlsProps) {
+function FilmControls({ film, main }: FilmControlsProps) {
   const navigate = useNavigate();
   const authorizationStatus = useAppSelector(selectAuthorizationStatus);
   const isAuth = authorizationStatus === AuthorizationStatus.Auth;
@@ -61,7 +62,7 @@ function FilmControls({ film }: FilmControlsProps) {
         )}
       </button>
 
-      {isAuth && film.id && (
+      {isAuth && film.id && main === false && (
         <Link
           to={generatePath(AppRoute.AddReview, { id: `${film.id}` })}
           className="btn film-card__button"

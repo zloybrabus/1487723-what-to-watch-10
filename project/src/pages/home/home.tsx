@@ -11,6 +11,7 @@ function Home(): JSX.Element {
   const promoFilm = useAppSelector(selectPromoFilms);
   const isDataLoading = useAppSelector(selectIsLoadingFilms);
   const isPromoLoading = useAppSelector(selectIsPromoLoading);
+  const isMain = true;
 
   if (isDataLoading || isPromoLoading || !promoFilm) {
     return <LoadingScreen />;
@@ -42,7 +43,7 @@ function Home(): JSX.Element {
                 <span className="film-card__genre">{promoFilm?.genre}</span>
                 <span className="film-card__year">{promoFilm?.released}</span>
               </p>
-              <FilmControls film={promoFilm} />
+              <FilmControls main={isMain} film={promoFilm} />
 
             </div>
           </div>
